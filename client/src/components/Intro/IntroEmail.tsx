@@ -3,14 +3,14 @@ import InputSearch from "../InputSearch/InputSearch";
 
 export default function IntroEmail() {
   return (
-    <div className="flex flex-col text-center pt-28">
+    <div className="container mx-auto text-center pt-20">
       <Typography color="deep-purple" className="font-semibold">
         Our blog
       </Typography>
       <div className="mt-3">
         <Typography variant="h1">The latest writings from our team</Typography>
         <Typography
-          variant="p"
+          variant="paragraph"
           color="blue-gray"
           className="mt-3 tracking-wide"
         >
