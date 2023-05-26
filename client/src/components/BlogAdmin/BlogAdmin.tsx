@@ -31,7 +31,7 @@ const BlogAdmin = () => {
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="w-[80%] p-5 mt-10 shadow-lg rounded-lg">hi</div>
+        <div className="w-[80%] p-5 mt-10 shadow-lg rounded-lg"></div>
       </div>
     </div>
   );
