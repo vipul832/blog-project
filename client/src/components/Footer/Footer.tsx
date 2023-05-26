@@ -35,7 +35,7 @@ export default function Footer() {
               <div className="logo-dot z-[1] w-1/2 h-1/2 bg-red-500 rounded-[50%] absolute bg-gradient-to-r from-primaryPurple to-[#53389e]"></div>
             </div>
             <Typography className="logo-text ms-2 font-medium font-inter">
-              Untitled UI
+              GrandTalk's
             </Typography>
           </div>
           <div className="grid grid-cols-3 justify-between gap-4">

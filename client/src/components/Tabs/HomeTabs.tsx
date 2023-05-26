@@ -38,7 +38,7 @@ export default function HomeTabs() {
     },
   ];
   return (
-    <Tabs value={activeTab} className="container mt-20 mx-auto mb-16">
+    <Tabs value={activeTab} className=" mt-20 mb-16">
       <TabsHeader
         className="rounded-none border-b border-blue-gray-50 bg-transparent p-0 items-center lg:w-[40%] overflow-auto"
         indicatorProps={{

@@ -20,15 +20,20 @@ export default function BlogCard() {
         </Typography>
         <div className="flex justify-between">
           <Typography variant="h5" className="text-black font-bold">
-            Ux review presentations
+            Podcast:Creating a better CX Community
           </Typography>
           <div>
             <IconButton variant="text">A</IconButton>
           </div>
         </div>
         <Typography variant="paragraph" className="mt-2 text-sm">
-          How do you create compelling presentations that wow your colleagues
-          and impress your managers?
+          {"How do you create compelling presentations that wow your colleague and impress your managers"
+            .length <= 18
+            ? ""
+            : "How do you create compelling presentations that wow your colleague and impress your managers".substr(
+                0,
+                100
+              ) + "..."}
         </Typography>
       </CardBody>
       <CardFooter className="py-0">

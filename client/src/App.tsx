@@ -5,19 +5,24 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header/Header";
 import HomePage from "./components/Home/HomePage";
-import Footer from "./components/Footer/Footer";
 import SignUp from "./components/SignUp/SignUp";
-import LoginPage from "./components/LogIn/LoginPage";
+import SignIn from "./components/SignIn/SignIn";
 import { ThemeProvider } from "@material-tailwind/react";
+import Layout from "./components/Layout/Layout";
+import BlogAdmin from "./components/BlogAdmin/BlogAdmin";
+import { Provider } from "react-redux";
+import { store } from "./App/store/store";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="signup" element={<SignUp />} />
+        <Route path="signin" element={<SignIn />} />
+        <Route path="blogpanel" element={<BlogAdmin />} />
+      </Route>
     </>
   )
 );
@@ -26,9 +31,9 @@ function App() {
   return (
     <>
       <ThemeProvider>
-        <Header />
-        <RouterProvider router={router} />
-        <Footer />
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
       </ThemeProvider>
     </>
   );

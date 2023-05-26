@@ -1,23 +1,15 @@
-import {
-  Card,
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-} from "@material-tailwind/react";
-import { useFormik } from "formik";
+import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-import { signUpSchema } from "../../validation/signUpSchema";
+import { useFormik } from "formik";
+import { signInSchema } from "../../validation/signInSchema";
 
-const SignUp = () => {
+const SignIn = () => {
   const formik = useFormik({
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
-    validationSchema: signUpSchema,
+    validationSchema: signInSchema,
     onSubmit: (values) => {
       console.log(values);
     },
@@ -28,30 +20,14 @@ const SignUp = () => {
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] md:w-[28rem] shadow flex justify-center rounded-lg">
         <Card color="transparent" shadow={false} className="p-3">
           <Typography variant="h4" color="blue-gray">
-            Sign Up
+            Sign In
           </Typography>
-          <Typography color="gray" className="mt-1 font-normal">
-            Enter your details to register.
-          </Typography>
+
           <form
             className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
             onSubmit={formik.handleSubmit}
           >
             <div className="mb-4 flex flex-col gap-6">
-              <Input
-                id="name"
-                size="lg"
-                label="Name"
-                color="deep-purple"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.errors.name && formik.touched.name ? true : false}
-              />
-              {formik.errors.name && formik.touched.name ? (
-                <span className="text-red-500 text-sm">
-                  {formik.errors.name}
-                </span>
-              ) : null}
               <Input
                 id="email"
                 size="lg"
@@ -87,62 +63,23 @@ const SignUp = () => {
                   {formik.errors.password}
                 </span>
               ) : null}
-              <Input
-                id="confirmPassword"
-                type="password"
-                size="lg"
-                label="Confirm Password"
-                color="deep-purple"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.errors.confirmPassword &&
-                  formik.touched.confirmPassword
-                    ? true
-                    : false
-                }
-              />
-              {formik.errors.confirmPassword &&
-              formik.touched.confirmPassword ? (
-                <span className="text-red-500 text-sm">
-                  {formik.errors.confirmPassword}
-                </span>
-              ) : null}
             </div>
-            <Checkbox
-              label={
-                <Typography
-                  variant="small"
-                  color="gray"
-                  className="flex items-center font-normal"
-                >
-                  I agree the
-                  <a
-                    href=""
-                    className="font-medium transition-colors hover:text-purple-500"
-                  >
-                    &nbsp;Terms and Conditions
-                  </a>
-                </Typography>
-              }
-              containerProps={{ className: "-ml-2.5" }}
-              color="deep-purple"
-            />
+
             <Button
               className="mt-6"
               color="deep-purple"
               fullWidth
               type="submit"
             >
-              Register
+              Sign In
             </Button>
             <Typography color="gray" className="mt-4 text-center font-normal">
               Already have an account?{" "}
               <Link
-                to="/signin"
+                to="/signup"
                 className="font-medium text-purple-500 transition-colors hover:text-blue-700"
               >
-                Sign In
+                Sign Up
               </Link>
             </Typography>
           </form>
@@ -152,4 +89,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

@@ -3,7 +3,7 @@ import InputSearch from "../InputSearch/InputSearch";
 
 export default function IntroEmail() {
   return (
-    <div className="container mx-auto text-center pt-20">
+    <div className=" text-center pt-20">
       <Typography color="deep-purple" className="font-semibold">
         Our blog
       </Typography>
