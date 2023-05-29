@@ -7,8 +7,14 @@ import {
   Avatar,
   IconButton,
 } from "@material-tailwind/react";
+import { Link, Navigate } from "react-router-dom";
 
-export default function BlogCard() {
+type BlogCardProp = {
+  title: string;
+  body: string;
+};
+
+export default function BlogCard({ title, body }: BlogCardProp) {
   return (
     <Card className="w-[24rem] shadow-none mt-5">
       <CardHeader className="p-0" floated={false} shadow={false}>
@@ -20,20 +26,18 @@ export default function BlogCard() {
         </Typography>
         <div className="flex justify-between">
           <Typography variant="h5" className="text-black font-bold">
-            Podcast:Creating a better CX Community
+            {title}
           </Typography>
           <div>
-            <IconButton variant="text">A</IconButton>
+            <Link to="blog">
+              <IconButton variant="text" className="text-md">
+                A
+              </IconButton>
+            </Link>
           </div>
         </div>
         <Typography variant="paragraph" className="mt-2 text-sm">
-          {"How do you create compelling presentations that wow your colleague and impress your managers"
-            .length <= 18
-            ? ""
-            : "How do you create compelling presentations that wow your colleague and impress your managers".substr(
-                0,
-                100
-              ) + "..."}
+          {body.length <= 18 ? "" : body.substr(0, 100) + "..."}
         </Typography>
       </CardBody>
       <CardFooter className="py-0">

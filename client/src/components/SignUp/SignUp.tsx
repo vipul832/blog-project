@@ -8,20 +8,48 @@ import {
 import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { signUpSchema } from "../../validation/signUpSchema";
+import { useState } from "react";
 
 const SignUp = () => {
+  const [image, setImage] = useState<string>();
   const formik = useFormik({
     initialValues: {
+      photo: "",
       name: "",
       email: "",
       password: "",
       confirmPassword: "",
+      checkbox: false,
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
       console.log(values);
     },
   });
+
+  function handleImageChange(file: null | File, inputTag: HTMLInputElement) {
+    const reader = new FileReader();
+    let imageUrl: string | ArrayBuffer | null;
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        imageUrl = reader.result;
+        if (
+          /^data:image\/(png|jpg)/.test(imageUrl as string) &&
+          file.size < 200000
+        ) {
+          setImage(imageUrl as string);
+          formik.setFieldValue("photo", imageUrl);
+        } else {
+          setImage("");
+          file?.size > 200000
+            ? formik.setFieldError("photo", "Accept only File less then 200KB")
+            : formik.setFieldError("photo", "Accept only PNG,JPG");
+        }
+      };
+    }
+    inputTag.value = "";
+  }
 
   return (
     <div className="min-h-screen relative flex justify-center items-center">
@@ -37,6 +65,32 @@ const SignUp = () => {
             className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
             onSubmit={formik.handleSubmit}
           >
+            {image && (
+              <div className="flex justify-center my-2">
+                <img src={image} alt="" width="100px" height="100px" />
+              </div>
+            )}
+            <div className="text-center mb-3">
+              <label htmlFor="photo">Profile Photo +</label>
+              <input
+                type="file"
+                id="photo"
+                className="absolute left-[-999px] hidden"
+                onChange={(event) => {
+                  handleImageChange(
+                    event.target.files ? event.target.files[0] : null,
+                    event.target
+                  );
+                }}
+                onBlur={formik.handleBlur}
+              />
+              {formik.errors.photo ? (
+                <div className="flex justify-center text-red-500">
+                  {formik.errors.photo}
+                </div>
+              ) : null}
+            </div>
+
             <div className="mb-4 flex flex-col gap-6">
               <Input
                 id="name"
@@ -68,6 +122,8 @@ const SignUp = () => {
                   {formik.errors.email}
                 </span>
               ) : null}
+
+              {/* have to add password encryption  */}
               <Input
                 id="password"
                 type="password"
@@ -125,9 +181,19 @@ const SignUp = () => {
                   </a>
                 </Typography>
               }
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              id="checkbox"
               containerProps={{ className: "-ml-2.5" }}
               color="deep-purple"
             />
+
+            {formik.errors.checkbox && formik.touched.checkbox ? (
+              <span className="text-red-500 text-sm block">
+                {formik.errors.checkbox}
+              </span>
+            ) : null}
+
             <Button
               className="mt-6"
               color="deep-purple"

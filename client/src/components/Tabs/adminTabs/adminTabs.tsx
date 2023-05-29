@@ -6,39 +6,26 @@ import {
   Tab,
   TabPanel,
 } from "@material-tailwind/react";
-import BlogList from "../BlogList/BlogList";
 
-export default function HomeTabs() {
-  const [activeTab, setActiveTab] = React.useState("view-all");
+import BlogInRow from "../../BlogDisplayInAdmin/BlogInRow";
+import { DRAFTBLOG, PUBLISHEDBLOG } from "../../../constant/constants";
+
+export default function AdminTags() {
+  const [activeTab, setActiveTab] = React.useState("draft");
   const data = [
     {
-      label: "View all",
-      value: "view-all",
-      desc: <BlogList />,
+      label: "Draft",
+      value: "draft",
+      desc: <BlogInRow data={DRAFTBLOG} />,
     },
     {
-      label: "Design",
-      value: "design",
-      desc: "Design Blog",
-    },
-    {
-      label: "Product",
-      value: "product",
-      desc: "Product Blog",
-    },
-    {
-      label: "Software",
-      value: "sde",
-      desc: "Software Blog",
-    },
-    {
-      label: "Customer",
-      value: "customer-success",
-      desc: "Customer Blog",
+      label: "Published",
+      value: "published",
+      desc: <BlogInRow data={PUBLISHEDBLOG} />,
     },
   ];
   return (
-    <Tabs value={activeTab} className=" mt-20 mb-16">
+    <Tabs value={activeTab} className="mt-20 mb-16 w-[90%] z-0">
       <TabsHeader
         className="rounded-none border-b border-blue-gray-50 bg-transparent p-0 items-center lg:w-[40%] overflow-auto"
         indicatorProps={{

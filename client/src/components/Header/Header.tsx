@@ -6,7 +6,7 @@ import {
   IconButton,
   Collapse,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -26,9 +26,9 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-semibold text-gray-700"
       >
-        <Link to={"/"} className="flex items-center">
+        <NavLink to="/" className="flex items-center">
           Home
-        </Link>
+        </NavLink>
       </Typography>
       <Typography
         as="li"
@@ -36,9 +36,9 @@ export default function Header() {
         color="blue-gray"
         className="p-1 font-semibold text-gray-700"
       >
-        <Link to="/blogpanel" className="flex items-center">
+        <NavLink to="/blogpanel" className="flex items-center">
           Blogs Admin
-        </Link>
+        </NavLink>
       </Typography>
       <Typography
         as="li"

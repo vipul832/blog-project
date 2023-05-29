@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import { getUserInfo } from "../../App/feature/userSlice";
 import { Button, Typography } from "@material-tailwind/react";
+import AdminTabs from "../Tabs/adminTabs/adminTabs";
 
 const BlogAdmin = () => {
   const userInfo = useSelector(getUserInfo);
-
   return (
-    <div className="min-h-screen">
+    <div className=" min-h-screen my-10 relative">
       <div className="flex justify-center">
         <div className="w-[80%] p-5 mt-10 shadow-lg rounded-lg bg-gradient-to-br from-[#4942E4] to-primaryPurple shadow-primaryPurple">
           {/* Introduction area */}
@@ -26,12 +26,14 @@ const BlogAdmin = () => {
                 Write new blog
               </Button>
             </div>
-            <div className="lg:flex hidden">right</div>
+            <div className="lg:flex hidden">
+              <img src="./assets/content_creator.svg" alt="content-creator" />
+            </div>
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
-        <div className="w-[80%] p-5 mt-10 shadow-lg rounded-lg"></div>
+      <div className="lg:mx-20 mb-10 justify-center flex">
+        <AdminTabs />
       </div>
     </div>
   );

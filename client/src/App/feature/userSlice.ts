@@ -2,8 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
 
 const initialvalue = {
+  userId: "1",
   name: "vishal",
   email: "vishal@gmail.com",
+  profileImage: "",
 };
 
 const userSlicer = createSlice({

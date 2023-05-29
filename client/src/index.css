@@ -6,3 +6,7 @@
 :root {
   font-family: inter;
 }
+
+.active {
+  @apply text-primaryPurple;
+}

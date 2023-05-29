@@ -13,6 +13,7 @@ import Layout from "./components/Layout/Layout";
 import BlogAdmin from "./components/BlogAdmin/BlogAdmin";
 import { Provider } from "react-redux";
 import { store } from "./App/store/store";
+import BlogContentPage from "./components/BlogContentPage/BlogContentPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -22,6 +23,7 @@ const router = createBrowserRouter(
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
         <Route path="blogpanel" element={<BlogAdmin />} />
+        <Route path="blog" element={<BlogContentPage />} />
       </Route>
     </>
   )

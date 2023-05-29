@@ -1,4 +1,4 @@
-import HomeTabs from "../Tabs/HomeTabs";
+import HomeTabs from "../Tabs/HomeTabs/HomeTabs";
 import IntroEmail from "../Intro/IntroEmail";
 
 const HomePage = () => {
