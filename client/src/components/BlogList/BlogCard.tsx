@@ -5,18 +5,19 @@ import {
   CardFooter,
   Typography,
   Avatar,
-  IconButton,
+  Button,
 } from "@material-tailwind/react";
 import { Link, Navigate } from "react-router-dom";
 
 type BlogCardProp = {
   title: string;
   body: string;
+  id: number;
 };
 
-export default function BlogCard({ title, body }: BlogCardProp) {
+export default function BlogCard({ title, body, id }: BlogCardProp) {
   return (
-    <Card className="w-[24rem] shadow-none mt-5">
+    <Card className="xl:w-[24rem] lg:w-[20rem]  shadow-none mt-5 m-5">
       <CardHeader className="p-0" floated={false} shadow={false}>
         <img src="assets/6.jpg" alt="" />
       </CardHeader>
@@ -25,14 +26,17 @@ export default function BlogCard({ title, body }: BlogCardProp) {
           Design
         </Typography>
         <div className="flex justify-between">
-          <Typography variant="h5" className="text-black font-bold">
-            {title}
+          <Typography
+            variant="h5"
+            className="text-black font-bold underline cursor-pointer"
+          >
+            {title.length <= 15 ? title : title.substring(0, 40) + "..."}
           </Typography>
-          <div>
-            <Link to="blog">
-              <IconButton variant="text" className="text-md">
+          <div className="md:block hidden">
+            <Link to="blog" onClick={(index) => console.log(index)}>
+              <Button variant="text" className="text-md">
                 A
-              </IconButton>
+              </Button>
             </Link>
           </div>
         </div>

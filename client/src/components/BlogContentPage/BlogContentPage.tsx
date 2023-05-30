@@ -11,9 +11,9 @@ export default function BlogContentPage() {
           <img
             src="./assets/1.jpg"
             alt=""
-            className="lg:w-[70%] w-full rounded-2xl mt-6 "
+            className="lg:w-[70%] w-full rounded-2xl mt-6 bg-cover"
           />
-          <div className="md:flex justify-between block mt-3 mb-6 text-justify">
+          <div className="md:flex justify-between block mt-3 mb-6 text-justify leading-8">
             <div className="lg:w-[70%] w-full">
               Thinking about building a career as a user experience (UX)
               designer? Great idea! UX design as an industry is growing faster

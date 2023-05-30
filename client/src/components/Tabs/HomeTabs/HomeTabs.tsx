@@ -7,9 +7,11 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import BlogList from "../../BlogList/BlogList";
+import { homeTabData } from "../../../constant/TabContant";
 
 export default function HomeTabs() {
   const [activeTab, setActiveTab] = React.useState("view-all");
+  // const data = homeTabData;
   const data = [
     {
       label: "View all",
@@ -64,6 +66,7 @@ export default function HomeTabs() {
         {data.map(({ value, desc }) => (
           <TabPanel key={value} value={value} className="p-0">
             {desc}
+            {/* <Desc /> */}
           </TabPanel>
         ))}
       </TabsBody>

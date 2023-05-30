@@ -28,6 +28,9 @@ const SignIn = () => {
             onSubmit={formik.handleSubmit}
           >
             <div className="mb-4 flex flex-col gap-6">
+              <label htmlFor="email">
+                Email <sup className="text-red-500">*</sup>
+              </label>
               <Input
                 id="email"
                 size="lg"
@@ -44,6 +47,9 @@ const SignIn = () => {
                   {formik.errors.email}
                 </span>
               ) : null}
+              <label htmlFor="password">
+                Password <sup className="text-red-500">*</sup>
+              </label>
               <Input
                 id="password"
                 type="password"

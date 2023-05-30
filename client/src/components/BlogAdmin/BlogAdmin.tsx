@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { getUserInfo } from "../../App/feature/userSlice";
 import { Button, Typography } from "@material-tailwind/react";
 import AdminTabs from "../Tabs/adminTabs/adminTabs";
+import { Link } from "react-router-dom";
 
 const BlogAdmin = () => {
   const userInfo = useSelector(getUserInfo);
@@ -22,9 +23,11 @@ const BlogAdmin = () => {
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam
                 quae quisquam excepturi itaque hic maxime.
               </div>
-              <Button className="mt-5" color="blue">
-                Write new blog
-              </Button>
+              <Link to="/blogeditor">
+                <Button className="mt-5" color="blue">
+                  Write new blog
+                </Button>
+              </Link>
             </div>
             <div className="lg:flex hidden">
               <img src="./assets/content_creator.svg" alt="content-creator" />

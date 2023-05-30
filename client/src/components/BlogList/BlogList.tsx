@@ -71,7 +71,14 @@ function BlogList() {
     <div>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 md:ms-0 ms-5 mb-5">
         {TOTALBLOG.map((value, index) => {
-          return <BlogCard key={index} title={value.title} body={value.body} />;
+          return (
+            <BlogCard
+              key={index}
+              title={value.title}
+              body={value.body}
+              id={index}
+            />
+          );
         })}
       </div>
       <hr className="bg-gray-700 my-3" />

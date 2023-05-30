@@ -71,7 +71,9 @@ const SignUp = () => {
               </div>
             )}
             <div className="text-center mb-3">
-              <label htmlFor="photo">Profile Photo +</label>
+              <label htmlFor="photo">
+                Profile Photo + <sup className="text-red-500">*</sup>
+              </label>
               <input
                 type="file"
                 id="photo"
@@ -92,6 +94,9 @@ const SignUp = () => {
             </div>
 
             <div className="mb-4 flex flex-col gap-6">
+              <label htmlFor="name">
+                Name <sup className="text-red-500">*</sup>
+              </label>
               <Input
                 id="name"
                 size="lg"
@@ -106,6 +111,9 @@ const SignUp = () => {
                   {formik.errors.name}
                 </span>
               ) : null}
+              <label htmlFor="email">
+                Email <sup className="text-red-500">*</sup>
+              </label>
               <Input
                 id="email"
                 size="lg"
@@ -124,6 +132,9 @@ const SignUp = () => {
               ) : null}
 
               {/* have to add password encryption  */}
+              <label htmlFor="password">
+                Password <sup className="text-red-500">*</sup>
+              </label>
               <Input
                 id="password"
                 type="password"
@@ -143,6 +154,9 @@ const SignUp = () => {
                   {formik.errors.password}
                 </span>
               ) : null}
+              <label htmlFor="confirmPassword">
+                Confirm Password <sup className="text-red-500">*</sup>
+              </label>
               <Input
                 id="confirmPassword"
                 type="password"
