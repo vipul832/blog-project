@@ -7,7 +7,7 @@ import {
   Avatar,
   Button,
 } from "@material-tailwind/react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type BlogCardProp = {
   title: string;
@@ -26,12 +26,14 @@ export default function BlogCard({ title, body, id }: BlogCardProp) {
           Design
         </Typography>
         <div className="flex justify-between">
-          <Typography
-            variant="h5"
-            className="text-black font-bold underline cursor-pointer"
-          >
-            {title.length <= 15 ? title : title.substring(0, 40) + "..."}
-          </Typography>
+          <Link to="/blog">
+            <Typography
+              variant="h5"
+              className="text-black font-bold underline cursor-pointer"
+            >
+              {title.length <= 15 ? title : title.substring(0, 40) + "..."}
+            </Typography>
+          </Link>
           <div className="md:block hidden">
             <Link to="blog" onClick={(index) => console.log(index)}>
               <Button variant="text" className="text-md">
