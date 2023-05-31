@@ -52,7 +52,7 @@ const SignUp = () => {
   }
 
   return (
-    <div className="min-h-screen relative flex justify-center items-center">
+    <div className="min-h-screen relative flex justify-center items-center my-20">
       <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] md:w-[28rem] shadow flex justify-center rounded-lg">
         <Card color="transparent" shadow={false} className="p-3">
           <Typography variant="h4" color="blue-gray">
@@ -93,7 +93,7 @@ const SignUp = () => {
               ) : null}
             </div>
 
-            <div className="mb-4 flex flex-col gap-6">
+            <div className="mb-4 flex flex-col gap-4">
               <label htmlFor="name">
                 Name <sup className="text-red-500">*</sup>
               </label>

@@ -5,6 +5,47 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useFormik } from "formik";
 
+const EditorModules = {
+  toolbar: [
+    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ size: [] }],
+    ["bold", "italic", "underline", "strike", "blockquote"],
+    [
+      { list: "ordered" },
+      { list: "bullet" },
+      { indent: "-1" },
+      { indent: "+1" },
+    ],
+    ["link", "image", "video"],
+    ["clean"],
+    ["align"],
+    ["direction"],
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false,
+  },
+};
+
+const EditorFormats = [
+  "header",
+  "font",
+  "size",
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "bullet",
+  "indent",
+  "link",
+  "image",
+  "video",
+  "align",
+  "direction",
+];
+
 export default function BlogEditorPage() {
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
@@ -69,11 +110,12 @@ export default function BlogEditorPage() {
               </label>
               <ReactQuill
                 theme="snow"
-                value={content}
                 onChange={(content) => {
                   setContent(content);
                   formik.setFieldValue("content", content);
                 }}
+                modules={EditorModules}
+                formats={EditorFormats}
                 className="lg:h-52"
                 id="content"
               />
