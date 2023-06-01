@@ -21,7 +21,6 @@ export const signUpSchema = Yup.object().shape({
       "Confirm password must match with above password !"
     )
     .required("Confirm password is required !"),
-  photo: Yup.string().required("Photo Required"),
   checkbox: Yup.bool() // use bool instead of boolean
     .oneOf([true], "You must accept the terms and conditions"),
 });

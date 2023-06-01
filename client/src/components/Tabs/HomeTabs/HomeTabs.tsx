@@ -7,36 +7,37 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import BlogList from "../../BlogList/BlogList";
-import { homeTabData } from "../../../constant/TabContant";
+import { useGetPostsQuery } from "../../../App/api/postsApi";
 
 export default function HomeTabs() {
-  const [activeTab, setActiveTab] = React.useState("view-all");
-  // const data = homeTabData;
-  const data = [
+  const [activeTab, setActiveTab] = React.useState("view all");
+  const { data } = useGetPostsQuery(activeTab);
+  console.log(data);
+  const data1 = [
     {
       label: "View all",
-      value: "view-all",
-      desc: <BlogList />,
+      value: "view all",
+      desc: <BlogList posts={data ? data : []} />,
     },
     {
       label: "Design",
       value: "design",
-      desc: "Design Blog",
+      desc: <BlogList posts={data ? data : []} />,
     },
     {
       label: "Product",
       value: "product",
-      desc: "Product Blog",
+      desc: <BlogList posts={data ? data : []} />,
     },
     {
       label: "Software",
-      value: "sde",
-      desc: "Software Blog",
+      value: "software",
+      desc: <BlogList posts={data ? data : []} />,
     },
     {
       label: "Customer",
-      value: "customer-success",
-      desc: "Customer Blog",
+      value: "customer success",
+      desc: <BlogList posts={data ? data : []} />,
     },
   ];
   return (
@@ -48,7 +49,7 @@ export default function HomeTabs() {
             "bg-transparent border-b-2 border-purple-600 shadow-none rounded-none",
         }}
       >
-        {data.map(({ label, value }) => (
+        {data1.map(({ label, value }) => (
           <Tab
             key={value}
             value={value}
@@ -63,7 +64,7 @@ export default function HomeTabs() {
       </TabsHeader>
 
       <TabsBody>
-        {data.map(({ value, desc }) => (
+        {data1.map(({ value, desc }) => (
           <TabPanel key={value} value={value} className="p-0">
             {desc}
             {/* <Desc /> */}

@@ -13,17 +13,29 @@ type BlogCardProp = {
   title: string;
   body: string;
   id: number;
+  category: string;
+  img: string;
 };
 
-export default function BlogCard({ title, body, id }: BlogCardProp) {
+export default function BlogCard({
+  title,
+  img,
+  category,
+  body,
+  id,
+}: BlogCardProp) {
   return (
     <Card className="xl:w-[24rem] lg:w-[20rem]  shadow-none mt-5 m-5">
       <CardHeader className="p-0" floated={false} shadow={false}>
-        <img src="assets/6.jpg" alt="" />
+        <img
+          src={img}
+          alt=""
+          className="w-full h-[200px] md:object-scale-down object-fill"
+        />
       </CardHeader>
       <CardBody className="pt-3">
         <Typography className="text-primaryPurple font-bold text-sm">
-          Design
+          {category}
         </Typography>
         <div className="flex justify-between">
           <Link to="/blog">
@@ -42,9 +54,16 @@ export default function BlogCard({ title, body, id }: BlogCardProp) {
             </Link>
           </div>
         </div>
-        <Typography variant="paragraph" className="mt-2 text-sm">
-          {body.length <= 18 ? "" : body.substr(0, 100) + "..."}
-        </Typography>
+        <div
+          className="mt-2 text-sm"
+          dangerouslySetInnerHTML={{
+            __html: `${
+              body.length <= 18 ? body : body.substring(0, 100) + "..."
+            }`,
+          }}
+        >
+          {/* {body.length <= 18 ? "" : body.substr(0, 100) + "..."} */}
+        </div>
       </CardBody>
       <CardFooter className="py-0">
         <div className="flex items-center justify-start">

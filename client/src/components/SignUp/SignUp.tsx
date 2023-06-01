@@ -9,12 +9,12 @@ import { useFormik } from "formik";
 import { Link } from "react-router-dom";
 import { signUpSchema } from "../../validation/signUpSchema";
 import { useState } from "react";
+import ImageInput from "../ImageInput/ImageInput";
 
 const SignUp = () => {
-  const [image, setImage] = useState<string>();
+  const [image, setImage] = useState<string>("");
   const formik = useFormik({
     initialValues: {
-      photo: "",
       name: "",
       email: "",
       password: "",
@@ -23,33 +23,13 @@ const SignUp = () => {
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
-      console.log(values);
+      if (!image) {
+        console.log("Upload image");
+        return;
+      }
+      console.log("bhai", { ...values, image });
     },
   });
-
-  function handleImageChange(file: null | File, inputTag: HTMLInputElement) {
-    const reader = new FileReader();
-    let imageUrl: string | ArrayBuffer | null;
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        imageUrl = reader.result;
-        if (
-          /^data:image\/(png|jpg)/.test(imageUrl as string) &&
-          file.size < 200000
-        ) {
-          setImage(imageUrl as string);
-          formik.setFieldValue("photo", imageUrl);
-        } else {
-          setImage("");
-          file?.size > 200000
-            ? formik.setFieldError("photo", "Accept only File less then 200KB")
-            : formik.setFieldError("photo", "Accept only PNG,JPG");
-        }
-      };
-    }
-    inputTag.value = "";
-  }
 
   return (
     <div className="min-h-screen relative flex justify-center items-center my-20">
@@ -65,34 +45,7 @@ const SignUp = () => {
             className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
             onSubmit={formik.handleSubmit}
           >
-            {image && (
-              <div className="flex justify-center my-2">
-                <img src={image} alt="" width="100px" height="100px" />
-              </div>
-            )}
-            <div className="text-center mb-3">
-              <label htmlFor="photo">
-                Profile Photo + <sup className="text-red-500">*</sup>
-              </label>
-              <input
-                type="file"
-                id="photo"
-                className="absolute left-[-999px] hidden"
-                onChange={(event) => {
-                  handleImageChange(
-                    event.target.files ? event.target.files[0] : null,
-                    event.target
-                  );
-                }}
-                onBlur={formik.handleBlur}
-              />
-              {formik.errors.photo ? (
-                <div className="flex justify-center text-red-500">
-                  {formik.errors.photo}
-                </div>
-              ) : null}
-            </div>
-
+            <ImageInput image={image} setImage={setImage} lable="Photo+" />
             <div className="mb-4 flex flex-col gap-4">
               <label htmlFor="name">
                 Name <sup className="text-red-500">*</sup>

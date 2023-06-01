@@ -10,3 +10,7 @@
 .active {
   @apply text-primaryPurple;
 }
+
+#imageOfUser {
+  @apply absolute hidden left-[-999];
+}
