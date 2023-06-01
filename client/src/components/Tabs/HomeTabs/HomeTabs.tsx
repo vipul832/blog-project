@@ -9,10 +9,12 @@ import {
 import BlogList from "../../BlogList/BlogList";
 import { useGetPostsQuery } from "../../../App/api/postsApi";
 
+let c = 0;
+
 export default function HomeTabs() {
   const [activeTab, setActiveTab] = React.useState("view all");
   const { data } = useGetPostsQuery(activeTab);
-  console.log(data);
+  console.log(data, c++);
   const data1 = [
     {
       label: "View all",
@@ -36,7 +38,7 @@ export default function HomeTabs() {
     },
     {
       label: "Customer",
-      value: "customer success",
+      value: "customer",
       desc: <BlogList posts={data ? data : []} />,
     },
   ];
@@ -67,7 +69,6 @@ export default function HomeTabs() {
         {data1.map(({ value, desc }) => (
           <TabPanel key={value} value={value} className="p-0">
             {desc}
-            {/* <Desc /> */}
           </TabPanel>
         ))}
       </TabsBody>

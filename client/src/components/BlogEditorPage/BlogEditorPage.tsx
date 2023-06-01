@@ -141,7 +141,7 @@ export default function BlogEditorPage() {
               <Typography variant="h3" className="text-primaryPurple">
                 Category
               </Typography>
-              <div>
+              <div className="text-start">
                 <Radio
                   id="design"
                   name="category"

@@ -25,7 +25,7 @@ export default function BlogCard({
   id,
 }: BlogCardProp) {
   return (
-    <Card className="xl:w-[24rem] lg:w-[20rem]  shadow-none mt-5 m-5">
+    <Card className="xl:w-[24rem] lg:w-[20rem]  shadow mt-5 m-5">
       <CardHeader className="p-0" floated={false} shadow={false}>
         <img
           src={img}
@@ -65,7 +65,7 @@ export default function BlogCard({
           {/* {body.length <= 18 ? "" : body.substr(0, 100) + "..."} */}
         </div>
       </CardBody>
-      <CardFooter className="py-0">
+      <CardFooter className="py-0 pb-2">
         <div className="flex items-center justify-start">
           <Avatar
             size="md"
