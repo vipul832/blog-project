@@ -7,7 +7,7 @@ import {
   Avatar,
   Button,
 } from "@material-tailwind/react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PostsGetData } from "../../utils/types";
 
 type BlogCardProp = {
