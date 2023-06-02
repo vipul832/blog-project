@@ -14,3 +14,11 @@
 #imageOfUser {
   @apply absolute hidden left-[-999];
 }
+
+.content-area h1 {
+  font-size: 24px;
+}
+
+.content-area h2 {
+  font-size: 20px;
+}

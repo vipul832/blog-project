@@ -1,11 +1,24 @@
-import React from "react";
-import { Button, Input, Radio, Typography } from "@material-tailwind/react";
-import { useState, useRef } from "react";
+import {
+  Button,
+  Input,
+  Typography,
+  Select,
+  Option,
+} from "@material-tailwind/react";
+import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useFormik } from "formik";
 import { useAddPostsMutation } from "../../App/api/postsApi";
 import ImageInput from "../ImageInput/ImageInput";
+
+type sendDataPosts = {
+  title: string;
+  desc: string;
+  content: string;
+  category: string;
+  username: string;
+};
 
 const EditorModules = {
   toolbar: [
@@ -48,7 +61,6 @@ const EditorFormats = [
 ];
 
 export default function BlogEditorPage() {
-  const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [addPosts] = useAddPostsMutation();
   const formik = useFormik({
@@ -57,58 +69,114 @@ export default function BlogEditorPage() {
       desc: "",
       content: "",
       category: "",
-      createdAt: "",
       username: "vipul",
     },
-    onSubmit: async (values) => {
-      if (thumbnail === "") {
-        console.log("photo dal");
-        return;
-      }
-      await addPosts({ ...values, thumbnail });
-      console.log({ ...values, thumbnail });
-    },
+    onSubmit: () => {},
   });
+
+  function handleFormSubmit(status: string) {
+    let values = formik.values;
+    if (thumbnail) {
+      if (status === "publish") {
+        addPostsToServer(values, status, "public", thumbnail);
+      } else {
+        addPostsToServer(values, status, "private", thumbnail);
+      }
+    } else {
+      console.log("Photo dal");
+      return;
+    }
+    handleFormReset();
+  }
+
+  async function addPostsToServer(
+    values: sendDataPosts,
+    status: string,
+    visibility: string,
+    thumbnail: string
+  ) {
+    await addPosts({
+      ...values,
+      status: status,
+      visibility: visibility,
+      thumbnail: thumbnail,
+    });
+  }
+
+  function handleFormReset() {
+    formik.resetForm();
+    setThumbnail("");
+  }
+
   return (
     <div className="min-h-screen">
       <Typography variant="h3" className="mt-5">
         Write your thought here ....
       </Typography>
 
-      <form className="mt-10 p-6" onSubmit={formik.handleSubmit}>
+      <form
+        className="mt-10 p-6"
+        onSubmit={formik.handleSubmit}
+        onReset={handleFormReset}
+      >
         <div className="lg:flex justify-between">
-          <div className="lg:w-[70%] h-[500px]">
-            <div className="w-[50%]">
-              <label htmlFor="title">
+          <div className="lg:w-[70%]">
+            <div className="mt-5">
+              <ImageInput
+                image={thumbnail}
+                setImage={setThumbnail}
+                lable="Thumbnail Image"
+              />
+            </div>
+            <div className="lg:w-[50%]">
+              <label htmlFor="title" className="block pb-1">
                 Title <sup className="text-red-500">*</sup>
               </label>
               <Input
                 label="Title"
                 name="title"
+                value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
             </div>
-            <div className="w-[50%] mt-6">
-              <label htmlFor="desc">
+            <div className="text-start lg:w-[50%] mt-5">
+              <label className="block pb-1">
+                Category <sup className="text-red-500">*</sup>
+              </label>
+              <Select
+                label="Category"
+                id="category"
+                value={formik.values.category}
+                onChange={(value) => formik.setFieldValue("category", value)}
+              >
+                <Option value="Software">Software</Option>
+                <Option value="Design">Design</Option>
+                <Option value="Product">Product</Option>
+                <Option value="Customer">Customer</Option>
+              </Select>
+            </div>
+            <div className="lg:w-[50%] mt-6">
+              <label htmlFor="desc" className="block pb-1">
                 Description <sup className="text-red-500">*</sup>
               </label>
               <Input
                 label="Description"
                 name="desc"
+                value={formik.values.desc}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
             </div>
 
-            <div className="mt-6">
+            <div className=" pt-5 h-[350px]">
               <label htmlFor="content">
                 Content <sup className="text-red-500">*</sup>
               </label>
               <ReactQuill
                 theme="snow"
+                value={formik.values.content}
                 onChange={(content) => {
-                  setContent(content);
                   formik.setFieldValue("content", content);
                 }}
                 modules={EditorModules}
@@ -118,64 +186,39 @@ export default function BlogEditorPage() {
               />
             </div>
           </div>
-          <div className="flex flex-col items-center">
-            <div className="border border-primaryPurple  w-[250px] p-3 lg:mt-0 mt-10 text-center leading-6">
-              <Typography variant="h3" className="text-primaryPurple">
-                Publish
-              </Typography>
-              <p>
-                <b>Status:</b>Draft
-              </p>
-              <p>
-                <b>Visibility:</b>Private
-              </p>
-              <div className="mt-5">
-                <ImageInput
-                  image={thumbnail}
-                  setImage={setThumbnail}
-                  lable="Thumbnail Image"
-                />
-              </div>
-            </div>
-            <div className="border border-primaryPurple w-[250px] text-center mt-10">
-              <Typography variant="h3" className="text-primaryPurple">
-                Category
-              </Typography>
-              <div className="text-start">
-                <Radio
-                  id="design"
-                  name="category"
-                  label="Design"
-                  onChange={() => formik.setFieldValue("category", "design")}
-                />
-                <Radio
-                  id="product"
-                  name="category"
-                  label="Product"
-                  onChange={() => formik.setFieldValue("category", "product")}
-                />
-                <Radio
-                  id="software"
-                  name="category"
-                  label="Software"
-                  onChange={() => formik.setFieldValue("category", "software")}
-                />
-                <Radio
-                  id="customer"
-                  name="category"
-                  label="Customer"
-                  onChange={() => formik.setFieldValue("category", "customer")}
-                />
-              </div>
-            </div>
-          </div>
+          {/* <div className="border border-primaryPurple  w-[250px] p-3 lg:mt-0  text-center leading-6 h-[150px]">
+            <Typography variant="h3" className="text-primaryPurple">
+              Publish
+            </Typography>
+            <p>
+              <b>Status:</b>Draft
+            </p>
+            <p>
+              <b>Visibility:</b>Private
+            </p>
+          </div> */}
         </div>
-        <div className="mt-5 text-center">
-          <Button type="submit" size="lg" color="deep-purple" className="m-2">
-            Save as Draft
-          </Button>
-          <Button type="submit" size="lg" color="deep-purple" className="m-2">
+        <div className="pt-10 text-center">
+          <Button
+            type="submit"
+            size="lg"
+            color="deep-purple"
+            className="m-2"
+            onClick={() => handleFormSubmit("publish")}
+          >
             Publish
+          </Button>
+          <Button type="reset" size="lg" color="deep-purple" className="m-2">
+            Reset
+          </Button>
+          <Button
+            type="submit"
+            size="lg"
+            color="deep-purple"
+            className="m-2"
+            onClick={() => handleFormSubmit("draft")}
+          >
+            Save as Draft
           </Button>
         </div>
       </form>

@@ -5,11 +5,14 @@ export type BlogTabs = {
   desc?: React.ElementType;
 }[];
 
-export type PostsData = {
+export type PostsGetData = {
   category: string;
   createdAt: string;
   desc: string;
   thumbnail: string;
+  status: string;
+  visibility: string;
+  content: string;
   title: string;
   updatedAt?: string;
   username: string;
@@ -17,9 +20,12 @@ export type PostsData = {
   _id?: string;
 };
 
-export type PostsSendData = Omit<PostsData, "__v" | "_id">;
+export type PostsSendData = Omit<
+  PostsGetData,
+  "__v" | "_id" | "createdAt" | "updatedAt"
+>;
 
-export type PostsDb = PostsData[];
+export type PostsDb = PostsGetData[];
 
 export type UploadResponse = {
   fileId: string;
@@ -32,3 +38,25 @@ export type UploadResponse = {
   url: string;
   width: number;
 };
+
+export interface Root {
+  message: string;
+  posts: Post[];
+  totalDoc: number;
+  totalPages: number;
+  category: string;
+}
+
+export interface Post {
+  _id: string;
+  title: string;
+  desc: string;
+  content: string;
+  thumbnail: string;
+  username: string;
+  category: string;
+  status: string;
+  visibility: string;
+  createdAt: string;
+  updatedAt: string;
+}

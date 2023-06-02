@@ -12,34 +12,34 @@ import { useGetPostsQuery } from "../../../App/api/postsApi";
 let c = 0;
 
 export default function HomeTabs() {
-  const [activeTab, setActiveTab] = React.useState("view all");
+  const [activeTab, setActiveTab] = React.useState("view_all");
   const { data } = useGetPostsQuery(activeTab);
   console.log(data, c++);
   const data1 = [
     {
       label: "View all",
-      value: "view all",
-      desc: <BlogList posts={data ? data : []} />,
+      value: "view_all",
+      desc: <BlogList posts={data ? data.posts : []} />,
     },
     {
       label: "Design",
-      value: "design",
-      desc: <BlogList posts={data ? data : []} />,
+      value: "Design",
+      desc: <BlogList posts={data ? data.posts : []} />,
     },
     {
       label: "Product",
-      value: "product",
-      desc: <BlogList posts={data ? data : []} />,
+      value: "Product",
+      desc: <BlogList posts={data ? data.posts : []} />,
     },
     {
       label: "Software",
-      value: "software",
-      desc: <BlogList posts={data ? data : []} />,
+      value: "Software",
+      desc: <BlogList posts={data ? data.posts : []} />,
     },
     {
       label: "Customer",
-      value: "customer",
-      desc: <BlogList posts={data ? data : []} />,
+      value: "Customer",
+      desc: <BlogList posts={data ? data.posts : []} />,
     },
   ];
   return (
@@ -66,7 +66,7 @@ export default function HomeTabs() {
       </TabsHeader>
 
       <TabsBody>
-        {data1.map(({ value, desc }) => (
+        {data1?.map(({ value, desc }) => (
           <TabPanel key={value} value={value} className="p-0">
             {desc}
           </TabPanel>

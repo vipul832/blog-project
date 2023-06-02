@@ -1,21 +1,26 @@
 import { Typography, Avatar } from "@material-tailwind/react";
+import { useLocation } from "react-router-dom";
+import { PostsGetData } from "../../utils/types";
 
 export default function BlogContentPage() {
+  const { state } = useLocation();
+  const blogInfo = state as PostsGetData;
   return (
     <div className="min-h-screen lg:mx-20 mx-6">
       <div className="mt-10">
         <div className="flex justify-center mt-6 flex-col">
-          <Typography variant={"h2"}>
-            Our Top 10 Javascript frameworks to use
-          </Typography>
+          <Typography variant={"h2"}>{blogInfo.title}</Typography>
           <img
-            src="./assets/1.jpg"
+            src={blogInfo.thumbnail}
             alt=""
-            className="lg:w-[70%] w-full rounded-2xl mt-6 bg-cover"
+            className="lg:w-[70%] w-full rounded-2xl mt-6 bg-cover h-[400px] object-cover"
           />
           <div className="md:flex justify-between block mt-3 mb-6 text-justify leading-8">
-            <div className="lg:w-[70%] w-full">
-              Thinking about building a career as a user experience (UX)
+            <div
+              className="lg:w-[70%] w-full content-area"
+              dangerouslySetInnerHTML={{ __html: blogInfo.content }}
+            >
+              {/* Thinking about building a career as a user experience (UX)
               designer? Great idea! UX design as an industry is growing faster
               than ever with an increasing demand for user-friendly products and
               services. If you're just getting started in UX design or a senior
@@ -45,7 +50,7 @@ export default function BlogContentPage() {
               <br /> We can take Glassdoor’s statistics as an example to
               determine the standard income for UX designers based in the United
               States — approximately $98,327 (including bonuses, tips, shared
-              profits, etc.).
+              profits, etc.). */}
             </div>
             <div className="mt-3">
               <div className="flex items-center justify-start">

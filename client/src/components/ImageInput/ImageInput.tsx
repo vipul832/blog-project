@@ -33,7 +33,7 @@ export default function ImageInput({
         <img
           src={image}
           alt="user photo"
-          className="object-cover w-20 h-20 mb-4 border-2 rounded-full border-sky-600"
+          className="object-scale-down w-1/2 h-1/2 mb-4 border-2 border-sky-600"
         />
       )}
 

@@ -7,14 +7,16 @@ import {
   Avatar,
   Button,
 } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { PostsGetData } from "../../utils/types";
 
 type BlogCardProp = {
   title: string;
   body: string;
-  id: number;
+  id: string;
   category: string;
   img: string;
+  blogInfo: PostsGetData;
 };
 
 export default function BlogCard({
@@ -23,9 +25,11 @@ export default function BlogCard({
   category,
   body,
   id,
+  blogInfo,
 }: BlogCardProp) {
+  const navigate = useNavigate();
   return (
-    <Card className="xl:w-[24rem] lg:w-[20rem]  shadow mt-5 m-5">
+    <Card className="xl:w-[24rem] lg:w-[20rem] shadow-none mt-5 m-5" id={id}>
       <CardHeader className="p-0" floated={false} shadow={false}>
         <img
           src={img}
@@ -47,11 +51,13 @@ export default function BlogCard({
             </Typography>
           </Link>
           <div className="md:block hidden">
-            <Link to="blog" onClick={(index) => console.log(index)}>
-              <Button variant="text" className="text-md">
-                A
-              </Button>
-            </Link>
+            <Button
+              variant="text"
+              className="text-md"
+              onClick={() => navigate("/blog", { state: blogInfo })}
+            >
+              A
+            </Button>
           </div>
         </div>
         <div

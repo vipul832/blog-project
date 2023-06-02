@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { PostsData, PostsDb, PostsSendData } from "../../utils/types";
+import { PostsSendData, Root } from "../../utils/types";
 
 export const userPostsApi = createApi({
   reducerPath: "postsDataApi",
@@ -7,10 +7,11 @@ export const userPostsApi = createApi({
     baseUrl: `http://localhost:5000/api`,
   }),
   endpoints: (builder) => ({
-    getPosts: builder.query<void, string>({
-      query: (category) => `/posts/?cat=${category}`,
+    getPosts: builder.query<Root, string>({
+      query: (category) => `/posts/?cat=${category}&page=1&limit=10`,
     }),
-    addPosts: builder.mutation<void, PostsData>({
+
+    addPosts: builder.mutation<void, PostsSendData>({
       query: (posts) => ({
         url: `/posts/`,
         method: "POST",
