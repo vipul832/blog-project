@@ -1,8 +1,8 @@
 import { Button, Typography } from "@material-tailwind/react";
-import { DRAFTBLOG } from "../../constant/constants";
+import { PostsDb, PostsGetData } from "../../utils/types";
 
 type BlogTabProps = {
-  data: typeof DRAFTBLOG;
+  data: PostsDb;
 };
 
 export default function BlogInRow({ data }: BlogTabProps) {
@@ -15,28 +15,22 @@ export default function BlogInRow({ data }: BlogTabProps) {
   );
 }
 
-type blogstruct = {
-  blog: {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-    published: boolean;
-  };
+type blogTabProps = {
+  blog: PostsGetData;
 };
 
-function BlogTabCard({ blog }: blogstruct) {
+function BlogTabCard({ blog }: blogTabProps) {
   return (
     <div className="mt-10">
       <div className="lg:flex lg:justify-between">
         <div className="lg:flex lg:w-[70%] w-full items-center">
-          <img src="./assets/7.jpg" alt="" className="w-60 rounded-lg h-40" />
+          <img src={blog.thumbnail} alt="" className="w-60 rounded-lg h-40" />
           <div className="md:ms-5 mt-3">
             <Typography variant={"h6"} className="text-black">
               {blog.title}
             </Typography>
             <Typography className={"lg:w-[70%]"}>
-              {blog.body.length <= 18 ? "" : blog.body.substr(0, 100) + "..."}
+              {blog.desc.length <= 18 ? "" : blog.desc.substr(0, 100) + "..."}
             </Typography>
             <Typography className="font-bold">12/01/23</Typography>
           </div>

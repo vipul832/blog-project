@@ -9,8 +9,10 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useFormik } from "formik";
-import { useAddPostsMutation } from "../../App/api/postsApi";
+import { useAddPostsMutation } from "../../App/api/Api";
 import ImageInput from "../ImageInput/ImageInput";
+import { getUserInfo } from "../../App/feature/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 type sendDataPosts = {
   title: string;
@@ -63,13 +65,16 @@ const EditorFormats = [
 export default function BlogEditorPage() {
   const [thumbnail, setThumbnail] = useState("");
   const [addPosts] = useAddPostsMutation();
+  const userInfo = useSelector(getUserInfo);
+  const dispatch = useDispatch();
+
   const formik = useFormik({
     initialValues: {
       title: "",
       desc: "",
       content: "",
       category: "",
-      username: "vipul",
+      username: "",
     },
     onSubmit: () => {},
   });
@@ -78,9 +83,23 @@ export default function BlogEditorPage() {
     let values = formik.values;
     if (thumbnail) {
       if (status === "publish") {
-        addPostsToServer(values, status, "public", thumbnail);
+        addPostsToServer(
+          values,
+          status,
+          "public",
+          thumbnail,
+          userInfo.userId,
+          userInfo.name
+        );
       } else {
-        addPostsToServer(values, status, "private", thumbnail);
+        addPostsToServer(
+          values,
+          status,
+          "private",
+          thumbnail,
+          userInfo.userId,
+          userInfo.name
+        );
       }
     } else {
       console.log("Photo dal");
@@ -93,13 +112,17 @@ export default function BlogEditorPage() {
     values: sendDataPosts,
     status: string,
     visibility: string,
-    thumbnail: string
+    thumbnail: string,
+    userId: string,
+    username: string
   ) {
     await addPosts({
       ...values,
       status: status,
       visibility: visibility,
       thumbnail: thumbnail,
+      userId: userId,
+      username: username,
     });
   }
 
@@ -119,7 +142,7 @@ export default function BlogEditorPage() {
         onSubmit={formik.handleSubmit}
         onReset={handleFormReset}
       >
-        <div className="lg:flex justify-between">
+        <div className="lg:flex justify-center">
           <div className="lg:w-[70%]">
             <div className="mt-5">
               <ImageInput
@@ -128,7 +151,7 @@ export default function BlogEditorPage() {
                 lable="Thumbnail Image"
               />
             </div>
-            <div className="lg:w-[50%]">
+            <div className="">
               <label htmlFor="title" className="block pb-1">
                 Title <sup className="text-red-500">*</sup>
               </label>
@@ -140,7 +163,7 @@ export default function BlogEditorPage() {
                 onBlur={formik.handleBlur}
               />
             </div>
-            <div className="text-start lg:w-[50%] mt-5">
+            <div className="text-start  mt-5">
               <label className="block pb-1">
                 Category <sup className="text-red-500">*</sup>
               </label>
@@ -156,7 +179,7 @@ export default function BlogEditorPage() {
                 <Option value="Customer">Customer</Option>
               </Select>
             </div>
-            <div className="lg:w-[50%] mt-6">
+            <div className=" mt-6">
               <label htmlFor="desc" className="block pb-1">
                 Description <sup className="text-red-500">*</sup>
               </label>

@@ -6,16 +6,19 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signUpSchema } from "../../validation/signUpSchema";
 import { useState } from "react";
 import ImageInput from "../ImageInput/ImageInput";
+import { useSignUpUserMutation } from "../../App/api/Api";
 
 const SignUp = () => {
-  const [image, setImage] = useState<string>("");
+  const [profilePic, setProfilePic] = useState<string>("");
+  const [signUpUser] = useSignUpUserMutation();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -23,11 +26,16 @@ const SignUp = () => {
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
-      if (!image) {
+      if (!profilePic) {
         console.log("Upload image");
         return;
+      } else {
+        (async () => {
+          const Data = await signUpUser({ ...values, profilePic });
+        })();
+        console.log("success added");
+        navigate("/signin");
       }
-      console.log("bhai", { ...values, image });
     },
   });
 
@@ -45,23 +53,31 @@ const SignUp = () => {
             className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96"
             onSubmit={formik.handleSubmit}
           >
-            <ImageInput image={image} setImage={setImage} lable="Photo+" />
+            <ImageInput
+              image={profilePic}
+              setImage={setProfilePic}
+              lable="Photo+"
+            />
             <div className="mb-4 flex flex-col gap-4">
-              <label htmlFor="name">
+              <label htmlFor="username">
                 Name <sup className="text-red-500">*</sup>
               </label>
               <Input
-                id="name"
+                id="username"
                 size="lg"
                 label="Name"
                 color="deep-purple"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.errors.name && formik.touched.name ? true : false}
+                error={
+                  formik.errors.username && formik.touched.username
+                    ? true
+                    : false
+                }
               />
-              {formik.errors.name && formik.touched.name ? (
+              {formik.errors.username && formik.touched.username ? (
                 <span className="text-red-500 text-sm">
-                  {formik.errors.name}
+                  {formik.errors.username}
                 </span>
               ) : null}
               <label htmlFor="email">
@@ -160,7 +176,8 @@ const SignUp = () => {
                 {formik.errors.checkbox}
               </span>
             ) : null}
-
+            {/* <Link to={"/signin"}>
+            </Link> */}
             <Button
               className="mt-6"
               color="deep-purple"

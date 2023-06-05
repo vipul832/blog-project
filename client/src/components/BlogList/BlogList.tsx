@@ -9,7 +9,7 @@ type BloglistProps = {
 function BlogList({ posts }: BloglistProps) {
   return (
     <div>
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 md:ms-0 ms-5 mb-5">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 md:ms-0 ms-5 mb-5 min-h-screen">
         {posts?.map((value, index) => {
           return (
             <BlogCard

@@ -16,6 +16,7 @@ export type PostsGetData = {
   title: string;
   updatedAt?: string;
   username: string;
+  userId?: string;
   __v?: number;
   _id?: string;
 };
@@ -60,3 +61,27 @@ export interface Post {
   createdAt: string;
   updatedAt: string;
 }
+
+export type AuthSendData = {
+  username: string;
+  email: string;
+  password: string;
+  profilePic: string;
+};
+
+export type AuthReceiveData = {
+  _id: string;
+  username: string;
+  email: string;
+  profilePic: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+};
+
+export type AuthLoginSendData = Omit<AuthSendData, "profilePic" | "username">;
+
+export type adminBLogSend = {
+  id: string;
+  status: string;
+};

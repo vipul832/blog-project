@@ -1,17 +1,30 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { signInSchema } from "../../validation/signInSchema";
+import { useLoginUserMutation } from "../../App/api/Api";
+import { setUser } from "../../App/feature/userSlice";
+import { useDispatch } from "react-redux";
+import { setSignInUser } from "../../App/feature/authSlice";
 
 const SignIn = () => {
+  const [loginUser] = useLoginUserMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validationSchema: signInSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        const userInfo = await loginUser(values);
+        console.log(userInfo);
+        dispatch(setUser(userInfo));
+        dispatch(setSignInUser());
+        navigate("/");
+      } catch (error) {}
     },
   });
 

@@ -5,23 +5,35 @@ import {
   TabsBody,
   Tab,
   TabPanel,
+  tab,
+  tabs,
 } from "@material-tailwind/react";
 
 import BlogInRow from "../../BlogDisplayInAdmin/BlogInRow";
-import { DRAFTBLOG, PUBLISHEDBLOG } from "../../../constant/constants";
+import { getUserInfo } from "../../../App/feature/userSlice";
+import { useSelector } from "react-redux";
+import { useGetAdminBlogsQuery } from "../../../App/api/Api";
+import { PostsDb, PostsGetData } from "../../../utils/types";
+import { useState } from "react";
 
 export default function AdminTags() {
   const [activeTab, setActiveTab] = React.useState("draft");
-  const data = [
+  const userInfo = useSelector(getUserInfo);
+  const { data } = useGetAdminBlogsQuery({
+    id: userInfo.userId,
+    status: activeTab,
+  });
+  console.log(data);
+  const blogTabs = [
     {
       label: "Draft",
       value: "draft",
-      desc: <BlogInRow data={DRAFTBLOG} />,
+      desc: <BlogInRow data={data ? data : []} />,
     },
     {
-      label: "Published",
-      value: "published",
-      desc: <BlogInRow data={PUBLISHEDBLOG} />,
+      label: "Publish",
+      value: "publish",
+      desc: <BlogInRow data={data ? data : []} />,
     },
   ];
   return (
@@ -33,7 +45,7 @@ export default function AdminTags() {
             "bg-transparent border-b-2 border-purple-600 shadow-none rounded-none",
         }}
       >
-        {data.map(({ label, value }) => (
+        {blogTabs.map(({ label, value }) => (
           <Tab
             key={value}
             value={value}
@@ -48,7 +60,7 @@ export default function AdminTags() {
       </TabsHeader>
 
       <TabsBody>
-        {data.map(({ value, desc }) => (
+        {blogTabs.map(({ value, desc }) => (
           <TabPanel key={value} value={value} className="p-0">
             {desc}
           </TabPanel>

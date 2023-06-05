@@ -82,7 +82,7 @@ export default function BlogCard({
           />
           <div className="ms-3">
             <Typography className="text-sm font-bold text-black">
-              Olivia Rhye
+              {blogInfo.username}
             </Typography>
             <Typography className="text-sm">20 Jan 2024</Typography>
           </div>

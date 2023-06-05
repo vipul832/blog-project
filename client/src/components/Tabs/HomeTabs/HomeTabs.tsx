@@ -7,7 +7,7 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 import BlogList from "../../BlogList/BlogList";
-import { useGetPostsQuery } from "../../../App/api/postsApi";
+import { useGetPostsQuery } from "../../../App/api/Api";
 
 let c = 0;
 
@@ -43,9 +43,9 @@ export default function HomeTabs() {
     },
   ];
   return (
-    <Tabs value={activeTab} className="min-h-screen mt-20 mb-16 ">
+    <Tabs value={activeTab} className="min-h-screen mt-20 mb-16">
       <TabsHeader
-        className="rounded-none border-b border-blue-gray-50 bg-transparent p-0 items-center lg:w-[40%] overflow-auto"
+        className="rounded-none border-b border-blue-gray-50 bg-transparent p-0 items-center lg:w-[40%] overflow-auto z-0"
         indicatorProps={{
           className:
             "bg-transparent border-b-2 border-purple-600 shadow-none rounded-none",

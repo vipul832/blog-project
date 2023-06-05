@@ -5,11 +5,19 @@ import {
   Button,
   IconButton,
   Collapse,
+  Avatar,
 } from "@material-tailwind/react";
 import { NavLink, Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserInfo } from "../../App/feature/userSlice";
+import { getAuthStatus } from "../../App/feature/authSlice";
+import { setSignOutUser } from "../../App/feature/authSlice";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
+  const userAuthStatus = useSelector(getAuthStatus);
+  const userInfo = useSelector(getUserInfo);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -75,57 +83,74 @@ export default function Header() {
           </div>
           <div className="mr-4 hidden lg:block">{navList}</div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="hidden gap-2 lg:flex">
-            <Link to="/signin">
-              <Button variant="text" size="sm" color="blue-gray">
-                Sign In
+
+        {userAuthStatus.authStatus ? (
+          <div className="flex gap-3 items-center">
+            <Avatar src={userInfo.profileImage} alt="avatar" />
+            <div>
+              <Button
+                size="sm"
+                color="deep-purple"
+                className="px-2"
+                onClick={() => dispatch(setSignOutUser())}
+              >
+                Log Out
               </Button>
-            </Link>
-            <Link to="/signup">
-              <Button variant="gradient" size="sm" color="deep-purple">
-                Sign Up
-              </Button>
-            </Link>
+            </div>
           </div>
-          <IconButton
-            variant="text"
-            className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
-            ripple={false}
-            onClick={() => setOpenNav(!openNav)}
-          >
-            {openNav ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                className="h-6 w-6"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </IconButton>
-        </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <div className="hidden gap-2 lg:flex">
+              <Link to="/signin">
+                <Button variant="text" size="sm" color="blue-gray">
+                  Sign In
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button variant="gradient" size="sm" color="deep-purple">
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
+            <IconButton
+              variant="text"
+              className="ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden"
+              ripple={false}
+              onClick={() => setOpenNav(!openNav)}
+            >
+              {openNav ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  className="h-6 w-6"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              )}
+            </IconButton>
+          </div>
+        )}
       </div>
       <Collapse open={openNav}>
         {navList}

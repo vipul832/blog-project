@@ -26,7 +26,7 @@ export default function Pagination() {
   };
 
   return (
-    <div className="flex items-center gap-4 justify-between">
+    <div className="flex items-center gap-4 justify-between ">
       <Button
         variant="text"
         color="blue-gray"
