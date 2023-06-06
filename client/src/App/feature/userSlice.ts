@@ -20,11 +20,17 @@ const userSlicer = createSlice({
       state.profileImage = actions.payload.data.profilePic;
       console.log("hi", actions.payload.data);
     },
+    removeUser: (state) => {
+      state.name = "";
+      state.userId = "";
+      state.email = "";
+      state.profileImage = "";
+    },
   },
 });
 
 export const getUserInfo = (state: RootState) => state.user;
 
-export const { setUser } = userSlicer.actions;
+export const { setUser, removeUser } = userSlicer.actions;
 
 export default userSlicer.reducer;

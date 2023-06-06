@@ -6,18 +6,20 @@ import {
   IconButton,
   Collapse,
   Avatar,
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
 } from "@material-tailwind/react";
 import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserInfo } from "../../App/feature/userSlice";
+import { getUserInfo, removeUser } from "../../App/feature/userSlice";
 import { getAuthStatus } from "../../App/feature/authSlice";
 import { setSignOutUser } from "../../App/feature/authSlice";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
   const userAuthStatus = useSelector(getAuthStatus);
-  const userInfo = useSelector(getUserInfo);
-  const dispatch = useDispatch();
 
   React.useEffect(() => {
     window.addEventListener(
@@ -48,16 +50,6 @@ export default function Header() {
           Blogs Admin
         </NavLink>
       </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-semibold text-gray-700"
-      >
-        <a href="#" className="flex items-center">
-          Pricing
-        </a>
-      </Typography>
     </ul>
   );
 
@@ -85,18 +77,8 @@ export default function Header() {
         </div>
 
         {userAuthStatus.authStatus ? (
-          <div className="flex gap-3 items-center">
-            <Avatar src={userInfo.profileImage} alt="avatar" />
-            <div>
-              <Button
-                size="sm"
-                color="deep-purple"
-                className="px-2"
-                onClick={() => dispatch(setSignOutUser())}
-              >
-                Log Out
-              </Button>
-            </div>
+          <div>
+            <ProfileMenu />
           </div>
         ) : (
           <div className="flex items-center gap-4">
@@ -152,6 +134,7 @@ export default function Header() {
           </div>
         )}
       </div>
+
       <Collapse open={openNav}>
         {navList}
         <Link to="/signup">
@@ -166,5 +149,71 @@ export default function Header() {
         </Link>
       </Collapse>
     </Navbar>
+  );
+}
+
+const profileMenuItems = [
+  {
+    label: "Sign Out",
+    icon: "p",
+  },
+];
+
+function ProfileMenu() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const closeMenu = () => setIsMenuOpen(false);
+  const userInfo = useSelector(getUserInfo);
+  const dispatch = useDispatch();
+  return (
+    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
+      <MenuHandler>
+        <Button
+          variant="text"
+          color="blue-gray"
+          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
+        >
+          <Avatar
+            variant="circular"
+            size="sm"
+            alt="candice wu"
+            className="border border-blue-500 p-0.5"
+            src={userInfo.profileImage}
+          />
+        </Button>
+      </MenuHandler>
+      <MenuList className="p-1">
+        {profileMenuItems.map(({ label, icon }, key) => {
+          const isLastItem = key === profileMenuItems.length - 1;
+          return (
+            <MenuItem
+              key={label}
+              onClick={() => {
+                closeMenu();
+                dispatch(setSignOutUser());
+                dispatch(removeUser());
+              }}
+              className={`flex items-center gap-2 rounded ${
+                isLastItem
+                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
+                  : ""
+              }`}
+            >
+              {/* {React.createElement(icon, {
+                className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
+                strokeWidth: 2,
+              })} */}
+              <Typography
+                as="span"
+                variant="small"
+                className="font-normal"
+                color={isLastItem ? "red" : "inherit"}
+              >
+                {label}
+              </Typography>
+            </MenuItem>
+          );
+        })}
+      </MenuList>
+    </Menu>
   );
 }

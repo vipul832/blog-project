@@ -2,7 +2,7 @@ import { Card, Input, Button, Typography } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { signInSchema } from "../../validation/signInSchema";
-import { useLoginUserMutation } from "../../App/api/Api";
+import { useLoginUserMutation } from "../../App/api/authApi";
 import { setUser } from "../../App/feature/userSlice";
 import { useDispatch } from "react-redux";
 import { setSignInUser } from "../../App/feature/authSlice";
@@ -24,7 +24,9 @@ const SignIn = () => {
         dispatch(setUser(userInfo));
         dispatch(setSignInUser());
         navigate("/");
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 

@@ -1,58 +1,40 @@
-import React from "react";
-import { Button, IconButton } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import React, { useState } from "react";
+import ReactPaginate from "react-paginate";
 
-export default function Pagination() {
-  const [active, setActive] = React.useState(1);
+type paginateProp = {
+  totalPage: number;
+  setPage: Function;
+};
 
-  const getItemProps = (index: number) =>
-    ({
-      variant: active === index ? "filled" : "text",
-      color: active === index ? "deep-purple" : "blue-gray",
-      onClick: () => setActive(index),
-      className: "rounded-full",
-    } as any);
-
-  const next = () => {
-    if (active === 5) return;
-
-    setActive(active + 1);
-  };
-
-  const prev = () => {
-    if (active === 1) return;
-
-    setActive(active - 1);
-  };
-
+export default function Pagination({ totalPage, setPage }: paginateProp) {
+  const [localPage, setLocalPage] = useState(0);
+  console.log("local", localPage);
   return (
-    <div className="flex items-center gap-4 justify-between ">
-      <Button
-        variant="text"
-        color="blue-gray"
-        className="flex items-center gap-2 rounded-full"
-        onClick={prev}
-        disabled={active === 1}
-      >
-        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-      </Button>
-      <div className="flex items-center gap-2">
-        <IconButton {...getItemProps(1)}>1</IconButton>
-        <IconButton {...getItemProps(2)}>2</IconButton>
-        <IconButton {...getItemProps(3)}>3</IconButton>
-        <IconButton {...getItemProps(4)}>4</IconButton>
-        <IconButton {...getItemProps(5)}>5</IconButton>
-      </div>
-      <Button
-        variant="text"
-        color="blue-gray"
-        className="flex items-center gap-2 rounded-full"
-        onClick={next}
-        disabled={active === 5}
-      >
-        Next
-        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-      </Button>
+    <div>
+      <ReactPaginate
+        previousLabel={"Previous"}
+        nextLabel={"Next"}
+        breakLabel={"..."}
+        pageCount={totalPage} // total number of page
+        className="flex gap-3 items-center justify-center"
+        pageRangeDisplayed={3}
+        marginPagesDisplayed={2}
+        onPageChange={(e) => {
+          setPage(e.selected + 1);
+          setLocalPage(e.selected);
+          // console.log("local", localPage);
+        }}
+        activeClassName={"bg-primaryPurple text-white"}
+        pageClassName={
+          "div w-10 rounded-full flex justify-center hover:bg-primaryPurple hover:text-white p-2"
+        }
+        previousClassName={
+          "border p-2 rounded  border-primaryPurple hover:bg-primaryPurple hover:text-white mr-40"
+        }
+        nextClassName={
+          "border p-2 rounded  border-primaryPurple hover:bg-primaryPurple hover:text-white ms-40"
+        }
+      />
     </div>
   );
 }

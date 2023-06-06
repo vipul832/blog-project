@@ -9,102 +9,84 @@ import { useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useFormik } from "formik";
-import { useAddPostsMutation } from "../../App/api/Api";
+import {
+  useAddPostsMutation,
+  useUpdateBlogMutation,
+} from "../../App/api/postApi";
 import ImageInput from "../ImageInput/ImageInput";
 import { getUserInfo } from "../../App/feature/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-
-type sendDataPosts = {
-  title: string;
-  desc: string;
-  content: string;
-  category: string;
-  username: string;
-};
-
-const EditorModules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" },
-      { align: ["", "right", "center", "justify"] },
-    ],
-    ["link", "image", "video"],
-    ["clean"],
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false,
-  },
-};
-
-const EditorFormats = [
-  "header",
-  "font",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video",
-  "align",
-  "direction",
-];
+import { useSelector } from "react-redux";
+import { EditorModules, EditorFormats } from "../../constant/constants";
+import { useLocation, useNavigate } from "react-router-dom";
+import { PostUpdate, sendDataPosts } from "../../utils/types";
 
 export default function BlogEditorPage() {
-  const [thumbnail, setThumbnail] = useState("");
+  const { state } = useLocation();
+  const postData = state as PostUpdate;
+  const [thumbnail, setThumbnail] = useState(postData?.thumbnail ?? "");
   const [addPosts] = useAddPostsMutation();
   const userInfo = useSelector(getUserInfo);
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [updateBlog] = useUpdateBlogMutation();
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      desc: "",
-      content: "",
-      category: "",
-      username: "",
+      title: postData?.title ?? "",
+      desc: postData?.desc ?? "",
+      content: postData?.content ?? "",
+      category: postData?.category ?? "",
+      username: postData?.username ?? "",
     },
     onSubmit: () => {},
   });
 
-  function handleFormSubmit(status: string) {
+  function handleFormSubmit(status: string, post: PostUpdate) {
     let values = formik.values;
     if (thumbnail) {
       if (status === "publish") {
-        addPostsToServer(
-          values,
-          status,
-          "public",
-          thumbnail,
-          userInfo.userId,
-          userInfo.name
-        );
+        if (post) {
+          updateBlog({
+            ...values,
+            ...post,
+            status: status,
+            visibility: "public",
+            thumbnail: thumbnail,
+          });
+        } else {
+          addPostsToServer(
+            values,
+            status,
+            "public",
+            thumbnail,
+            userInfo.userId,
+            userInfo.name
+          );
+        }
       } else {
-        addPostsToServer(
-          values,
-          status,
-          "private",
-          thumbnail,
-          userInfo.userId,
-          userInfo.name
-        );
+        if (post) {
+          updateBlog({
+            ...values,
+            ...post,
+            status: status,
+            visibility: "private",
+            thumbnail: thumbnail,
+          });
+        } else {
+          addPostsToServer(
+            values,
+            status,
+            "private",
+            thumbnail,
+            userInfo.userId,
+            userInfo.name
+          );
+        }
       }
     } else {
       console.log("Photo dal");
       return;
     }
+    navigate("/blogpanel");
     handleFormReset();
   }
 
@@ -209,17 +191,6 @@ export default function BlogEditorPage() {
               />
             </div>
           </div>
-          {/* <div className="border border-primaryPurple  w-[250px] p-3 lg:mt-0  text-center leading-6 h-[150px]">
-            <Typography variant="h3" className="text-primaryPurple">
-              Publish
-            </Typography>
-            <p>
-              <b>Status:</b>Draft
-            </p>
-            <p>
-              <b>Visibility:</b>Private
-            </p>
-          </div> */}
         </div>
         <div className="pt-10 text-center">
           <Button
@@ -227,7 +198,7 @@ export default function BlogEditorPage() {
             size="lg"
             color="deep-purple"
             className="m-2"
-            onClick={() => handleFormSubmit("publish")}
+            onClick={() => handleFormSubmit("publish", postData)}
           >
             Publish
           </Button>
@@ -239,7 +210,7 @@ export default function BlogEditorPage() {
             size="lg"
             color="deep-purple"
             className="m-2"
-            onClick={() => handleFormSubmit("draft")}
+            onClick={() => handleFormSubmit("draft", postData)}
           >
             Save as Draft
           </Button>

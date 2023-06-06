@@ -85,3 +85,19 @@ export type adminBLogSend = {
   id: string;
   status: string;
 };
+
+export type PostUpdate = Omit<Post, "createdAt" | "updatedAt">;
+
+export type sendDataPosts = {
+  title: string;
+  desc: string;
+  content: string;
+  category: string;
+  username: string;
+};
+
+export type filterPost = {
+  category: string;
+  limit?: number;
+  page?: number;
+};

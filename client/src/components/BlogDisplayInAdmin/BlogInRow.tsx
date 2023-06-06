@@ -1,5 +1,7 @@
 import { Button, Typography } from "@material-tailwind/react";
 import { PostsDb, PostsGetData } from "../../utils/types";
+import { useNavigate } from "react-router-dom";
+import { useDeleteBlogMutation } from "../../App/api/postApi";
 
 type BlogTabProps = {
   data: PostsDb;
@@ -20,6 +22,8 @@ type blogTabProps = {
 };
 
 function BlogTabCard({ blog }: blogTabProps) {
+  const navigate = useNavigate();
+  const [deleteBlog] = useDeleteBlogMutation();
   return (
     <div className="mt-10">
       <div className="lg:flex lg:justify-between">
@@ -30,16 +34,30 @@ function BlogTabCard({ blog }: blogTabProps) {
               {blog.title}
             </Typography>
             <Typography className={"lg:w-[70%]"}>
-              {blog.desc.length <= 18 ? "" : blog.desc.substr(0, 100) + "..."}
+              {blog.desc.length <= 18
+                ? ""
+                : blog.desc.substring(0, 100) + "..."}
             </Typography>
             <Typography className="font-bold">12/01/23</Typography>
           </div>
         </div>
         <div className="whitespace-nowrap">
-          <Button size="sm" className="mx-2" color="deep-purple">
+          <Button
+            size="sm"
+            className="mx-2"
+            color="deep-purple"
+            onClick={() => {
+              navigate("/blogeditor", { state: blog });
+            }}
+          >
             Edit
           </Button>
-          <Button size="sm" className="mx-2" color="deep-purple">
+          <Button
+            size="sm"
+            className="mx-2"
+            color="deep-purple"
+            onClick={() => deleteBlog(blog)}
+          >
             Delete
           </Button>
           <Button size="sm" className="mx-2" color="deep-purple">

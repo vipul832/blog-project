@@ -10,7 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { signUpSchema } from "../../validation/signUpSchema";
 import { useState } from "react";
 import ImageInput from "../ImageInput/ImageInput";
-import { useSignUpUserMutation } from "../../App/api/Api";
+import { useSignUpUserMutation } from "../../App/api/authApi";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState<string>("");
@@ -32,6 +32,7 @@ const SignUp = () => {
       } else {
         (async () => {
           const Data = await signUpUser({ ...values, profilePic });
+          console.log(Data);
         })();
         console.log("success added");
         navigate("/signin");

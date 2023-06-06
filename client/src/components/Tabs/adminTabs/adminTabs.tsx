@@ -5,16 +5,12 @@ import {
   TabsBody,
   Tab,
   TabPanel,
-  tab,
-  tabs,
 } from "@material-tailwind/react";
 
 import BlogInRow from "../../BlogDisplayInAdmin/BlogInRow";
 import { getUserInfo } from "../../../App/feature/userSlice";
 import { useSelector } from "react-redux";
-import { useGetAdminBlogsQuery } from "../../../App/api/Api";
-import { PostsDb, PostsGetData } from "../../../utils/types";
-import { useState } from "react";
+import { useGetAdminBlogsQuery } from "../../../App/api/postApi";
 
 export default function AdminTags() {
   const [activeTab, setActiveTab] = React.useState("draft");
