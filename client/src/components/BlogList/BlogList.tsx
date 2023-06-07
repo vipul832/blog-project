@@ -1,9 +1,8 @@
-import { PostsDb } from "../../utils/types";
-import Pagination from "../Paginate/Pagination";
+import { Post } from "../../utils/types";
 import BlogCard from "./BlogCard";
 
 type BloglistProps = {
-  posts: PostsDb;
+  posts: Post[];
 };
 
 function BlogList({ posts }: BloglistProps) {

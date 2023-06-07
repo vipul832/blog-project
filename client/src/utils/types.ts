@@ -1,33 +1,15 @@
-import React, { ReactNode, FC } from "react";
-export type BlogTabs = {
-  label: string;
-  value: string;
-  desc?: React.ElementType;
-}[];
+// export type BlogTabs = {
+//   label: string;
+//   value: string;
+//   desc?: React.ElementType;
+// }[];
 
-export type PostsGetData = {
-  category: string;
-  createdAt: string;
-  desc: string;
-  thumbnail: string;
-  status: string;
-  visibility: string;
-  content: string;
-  title: string;
-  updatedAt?: string;
-  username: string;
-  userId?: string;
-  __v?: number;
-  _id?: string;
-};
+// export type PostsSendData = Omit<
+//   Post,
+//   "__v" | "_id" | "createdAt" | "updatedAt"
+// >;
 
-export type PostsSendData = Omit<
-  PostsGetData,
-  "__v" | "_id" | "createdAt" | "updatedAt"
->;
-
-export type PostsDb = PostsGetData[];
-
+// FILE UPLOAD RESPONSE
 export type UploadResponse = {
   fileId: string;
   filePath: string;
@@ -40,14 +22,40 @@ export type UploadResponse = {
   width: number;
 };
 
-export interface Root {
-  message: string;
-  posts: Post[];
-  totalDoc: number;
-  totalPages: number;
-  category: string;
-}
+// ****** UPDATED TYPES OF CURRENT DATA  ******
 
+//GENERAL POST DATA REQUIRED
+export type PostField = {
+  title: string;
+  desc: string;
+  content: string;
+  category: string;
+  thumbnail: string;
+  status: string;
+  visibility: string;
+  userId: string;
+  username: string;
+  userPic?: string;
+};
+
+// POST SEND FOR CURD
+export type PostCurd = {
+  category: string;
+  createdAt: string;
+  desc: string;
+  thumbnail: string;
+  status: string;
+  visibility: string;
+  content: string;
+  title: string;
+  updatedAt?: string;
+  username: string;
+  userId?: string;
+  __v?: number;
+  _id: string;
+};
+
+//RECEIVED POST TYPE
 export interface Post {
   _id: string;
   title: string;
@@ -57,11 +65,13 @@ export interface Post {
   username: string;
   category: string;
   status: string;
+  userId: string;
   visibility: string;
   createdAt: string;
   updatedAt: string;
 }
 
+// LOGIN TYPE
 export type AuthSendData = {
   username: string;
   email: string;
@@ -69,6 +79,9 @@ export type AuthSendData = {
   profilePic: string;
 };
 
+export type AuthLoginSendData = Omit<AuthSendData, "profilePic" | "username">;
+
+// DATA RECEIVED FROM SERVER TYPE
 export type AuthReceiveData = {
   _id: string;
   username: string;
@@ -79,25 +92,42 @@ export type AuthReceiveData = {
   __v: number;
 };
 
-export type AuthLoginSendData = Omit<AuthSendData, "profilePic" | "username">;
+//FILTER CONDITION TYPE
+export type PostFilter = {
+  category: string;
+  limit?: number;
+  page?: number;
+};
 
-export type adminBLogSend = {
+//FILTER DATA RESPONSE TYPE
+export interface FilteredPost {
+  message: string;
+  posts: Post[];
+  totalDoc: number;
+  totalPages: number;
+  category: string;
+}
+
+// ADMIN BLOG REQUEST INFO TYPE
+export type AdminPostRequest = {
   id: string;
   status: string;
 };
 
+// RESPONSE OF LIST OF BLOG
+export type PostReceived = Post[];
+
+//ADD POST TYPE
+export type SendPost = Omit<Post, "_id" | "createdAt" | "updatedAt">;
+
+// DATA TO UPDATE POST
 export type PostUpdate = Omit<Post, "createdAt" | "updatedAt">;
 
-export type sendDataPosts = {
+// ADD POST DATA IN SERVER
+export type addPostData = {
   title: string;
   desc: string;
   content: string;
   category: string;
   username: string;
-};
-
-export type filterPost = {
-  category: string;
-  limit?: number;
-  page?: number;
 };

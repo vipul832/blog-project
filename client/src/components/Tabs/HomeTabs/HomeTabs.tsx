@@ -16,9 +16,9 @@ export default function HomeTabs() {
   const { data } = useGetPostsQuery({
     category: activeTab,
     page: page,
-    limit: 2,
+    limit: 5,
   });
-  console.log("homepage", page);
+  console.log("homepage");
   const totalPage = data?.totalPages;
   const data1 = [
     {

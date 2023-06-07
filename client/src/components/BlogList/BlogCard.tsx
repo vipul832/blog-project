@@ -8,7 +8,8 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
-import { PostsGetData } from "../../utils/types";
+import { PostField } from "../../utils/types";
+import { BsArrowUpRight } from "react-icons/bs";
 
 type BlogCardProp = {
   title: string;
@@ -16,7 +17,7 @@ type BlogCardProp = {
   id: string;
   category: string;
   img: string;
-  blogInfo: PostsGetData;
+  blogInfo: PostField;
 };
 
 export default function BlogCard({
@@ -42,7 +43,7 @@ export default function BlogCard({
           {category}
         </Typography>
         <div className="flex justify-between">
-          <Link to="/blog">
+          <Link to="/blog" state={blogInfo}>
             <Typography
               variant="h5"
               className="text-black font-bold underline cursor-pointer"
@@ -53,10 +54,11 @@ export default function BlogCard({
           <div className="md:block hidden">
             <Button
               variant="text"
-              className="text-md"
+              size="sm"
+              className="text-black text-xl"
               onClick={() => navigate("/blog", { state: blogInfo })}
             >
-              A
+              <BsArrowUpRight />
             </Button>
           </div>
         </div>

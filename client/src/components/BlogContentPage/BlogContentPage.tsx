@@ -1,15 +1,23 @@
 import { Typography, Avatar } from "@material-tailwind/react";
 import { useLocation } from "react-router-dom";
-import { PostsGetData } from "../../utils/types";
+import { Post } from "../../utils/types";
 
 export default function BlogContentPage() {
   const { state } = useLocation();
-  const blogInfo = state as PostsGetData;
+  const blogInfo = state as Post;
   return (
     <div className="min-h-screen lg:mx-20 mx-6">
       <div className="mt-10">
         <div className="flex justify-center mt-6 flex-col">
-          <Typography variant={"h2"}>{blogInfo.title}</Typography>
+          <Typography variant={"h2"} className={"lg:w-[80%]"}>
+            {blogInfo.title}
+          </Typography>
+          <Typography
+            variant={"paragraph"}
+            className={"text-gray-600 lg:w-[70%] mt-2"}
+          >
+            {blogInfo.desc}
+          </Typography>
           <img
             src={blogInfo.thumbnail}
             alt=""
@@ -17,7 +25,7 @@ export default function BlogContentPage() {
           />
           <div className="md:flex justify-between block mt-3 mb-6 text-justify leading-8">
             <div
-              className="lg:w-[70%] w-full content-area"
+              className="lg:w-[70%] w-full content-area mt-5"
               dangerouslySetInnerHTML={{ __html: blogInfo.content }}
             >
               {/* Thinking about building a career as a user experience (UX)

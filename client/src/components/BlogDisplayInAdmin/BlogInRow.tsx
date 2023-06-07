@@ -1,13 +1,16 @@
 import { Button, Typography } from "@material-tailwind/react";
-import { PostsDb, PostsGetData } from "../../utils/types";
+import { PostUpdate, Post } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
-import { useDeleteBlogMutation } from "../../App/api/postApi";
+import {
+  useDeleteBlogMutation,
+  useUpdateBlogMutation,
+} from "../../App/api/postApi";
 
-type BlogTabProps = {
-  data: PostsDb;
+type BlogInRowProps = {
+  data: Post[];
 };
 
-export default function BlogInRow({ data }: BlogTabProps) {
+export default function BlogInRow({ data }: BlogInRowProps) {
   return (
     <>
       {data.map((blog, index) => {
@@ -17,12 +20,13 @@ export default function BlogInRow({ data }: BlogTabProps) {
   );
 }
 
-type blogTabProps = {
-  blog: PostsGetData;
+type blogTabCardProps = {
+  blog: Post;
 };
 
-function BlogTabCard({ blog }: blogTabProps) {
+function BlogTabCard({ blog }: blogTabCardProps) {
   const navigate = useNavigate();
+  const [updateBlog] = useUpdateBlogMutation();
   const [deleteBlog] = useDeleteBlogMutation();
   return (
     <div className="mt-10">
@@ -30,10 +34,13 @@ function BlogTabCard({ blog }: blogTabProps) {
         <div className="lg:flex lg:w-[70%] w-full items-center">
           <img src={blog.thumbnail} alt="" className="w-60 rounded-lg h-40" />
           <div className="md:ms-5 mt-3">
+            <Typography className={"text-primaryPurple font-bold"}>
+              {blog.category}
+            </Typography>
             <Typography variant={"h6"} className="text-black">
               {blog.title}
             </Typography>
-            <Typography className={"lg:w-[70%]"}>
+            <Typography className={"lg:w-[70%] text-black"}>
               {blog.desc.length <= 18
                 ? ""
                 : blog.desc.substring(0, 100) + "..."}
@@ -60,9 +67,23 @@ function BlogTabCard({ blog }: blogTabProps) {
           >
             Delete
           </Button>
-          <Button size="sm" className="mx-2" color="deep-purple">
-            Published
-          </Button>
+          {blog.status === "publish" ? null : (
+            <Button
+              size="sm"
+              className="mx-2"
+              color="deep-purple"
+              onClick={() => {
+                console.log(blog);
+                updateBlog({
+                  ...blog,
+                  status: "publish",
+                  visibility: "public",
+                } as PostUpdate);
+              }}
+            >
+              Published
+            </Button>
+          )}
         </div>
       </div>
     </div>

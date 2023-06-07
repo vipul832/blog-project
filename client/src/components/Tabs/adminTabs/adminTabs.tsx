@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { useGetAdminBlogsQuery } from "../../../App/api/postApi";
 
 export default function AdminTags() {
-  const [activeTab, setActiveTab] = React.useState("draft");
+  const [activeTab, setActiveTab] = React.useState("publish");
   const userInfo = useSelector(getUserInfo);
   const { data } = useGetAdminBlogsQuery({
     id: userInfo.userId,
@@ -22,18 +22,21 @@ export default function AdminTags() {
   console.log(data);
   const blogTabs = [
     {
-      label: "Draft",
-      value: "draft",
-      desc: <BlogInRow data={data ? data : []} />,
-    },
-    {
       label: "Publish",
       value: "publish",
       desc: <BlogInRow data={data ? data : []} />,
     },
+    {
+      label: "Draft",
+      value: "draft",
+      desc: <BlogInRow data={data ? data : []} />,
+    },
   ];
   return (
-    <Tabs value={activeTab} className="mt-20 mb-16 w-[90%] z-0">
+    <Tabs
+      value={activeTab}
+      className="mt-20 mb-16 w-[90%] z-0 backdrop-blur-lg p-4 rounded-md"
+    >
       <TabsHeader
         className="rounded-none border-b border-blue-gray-50 bg-transparent p-0 items-center lg:w-[40%] overflow-auto"
         indicatorProps={{

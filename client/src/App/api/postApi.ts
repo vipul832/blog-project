@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import {
-  PostsSendData,
-  Root,
-  adminBLogSend,
-  PostsDb,
+  SendPost,
+  FilteredPost,
+  AdminPostRequest,
+  PostReceived,
   PostUpdate,
-  PostsGetData,
-  filterPost,
+  PostCurd,
+  PostFilter,
 } from "../../utils/types";
 
 export const postApi = createApi({
@@ -16,13 +16,13 @@ export const postApi = createApi({
     baseUrl: `http://localhost:5000/api/posts`,
   }),
   endpoints: (builder) => ({
-    getPosts: builder.query<Root, filterPost>({
+    getPosts: builder.query<FilteredPost, PostFilter>({
       query: (filter) =>
         `/?cat=${filter.category}&page=${filter.page}&limit=${filter.limit}`,
       providesTags: ["Post"],
     }),
 
-    addPosts: builder.mutation<void, PostsSendData>({
+    addPosts: builder.mutation<void, SendPost>({
       query: (posts) => ({
         url: `/`,
         method: "POST",
@@ -30,11 +30,13 @@ export const postApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    getAdminBlogs: builder.query<PostsDb, adminBLogSend>({
+
+    getAdminBlogs: builder.query<PostReceived, AdminPostRequest>({
       query: (adminInfo) =>
         `/adminblog/?id=${adminInfo.id}&status=${adminInfo.status}`,
       providesTags: ["Post"],
     }),
+
     updateBlog: builder.mutation<void, PostUpdate>({
       query: (post) => ({
         url: `/update/${post._id}`,
@@ -43,7 +45,8 @@ export const postApi = createApi({
       }),
       invalidatesTags: ["Post"],
     }),
-    deleteBlog: builder.mutation<void, PostsGetData>({
+
+    deleteBlog: builder.mutation<void, PostCurd>({
       query: (post) => ({
         url: `/delete/${post._id}`,
         method: "DELETE",

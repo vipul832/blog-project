@@ -4,11 +4,12 @@ import ReactPaginate from "react-paginate";
 type paginateProp = {
   totalPage: number;
   setPage: Function;
+  // page:number
 };
 
 export default function Pagination({ totalPage, setPage }: paginateProp) {
   const [localPage, setLocalPage] = useState(0);
-  console.log("local", localPage);
+
   return (
     <div>
       <ReactPaginate

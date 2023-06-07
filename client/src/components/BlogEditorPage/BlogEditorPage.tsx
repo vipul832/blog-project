@@ -18,7 +18,7 @@ import { getUserInfo } from "../../App/feature/userSlice";
 import { useSelector } from "react-redux";
 import { EditorModules, EditorFormats } from "../../constant/constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PostUpdate, sendDataPosts } from "../../utils/types";
+import { PostUpdate, addPostData } from "../../utils/types";
 
 export default function BlogEditorPage() {
   const { state } = useLocation();
@@ -45,14 +45,16 @@ export default function BlogEditorPage() {
     if (thumbnail) {
       if (status === "publish") {
         if (post) {
+          console.log("in if publish post");
           updateBlog({
-            ...values,
             ...post,
+            ...values,
             status: status,
             visibility: "public",
             thumbnail: thumbnail,
           });
         } else {
+          console.log("in else publish post");
           addPostsToServer(
             values,
             status,
@@ -65,8 +67,8 @@ export default function BlogEditorPage() {
       } else {
         if (post) {
           updateBlog({
-            ...values,
             ...post,
+            ...values,
             status: status,
             visibility: "private",
             thumbnail: thumbnail,
@@ -91,7 +93,7 @@ export default function BlogEditorPage() {
   }
 
   async function addPostsToServer(
-    values: sendDataPosts,
+    values: addPostData,
     status: string,
     visibility: string,
     thumbnail: string,

@@ -3,6 +3,8 @@ import {
   createRoutesFromElements,
   createBrowserRouter,
   RouterProvider,
+  Outlet,
+  Navigate,
 } from "react-router-dom";
 import "./App.css";
 import HomePage from "./components/Home/HomePage";
@@ -11,10 +13,10 @@ import SignIn from "./components/SignIn/SignIn";
 import { ThemeProvider } from "@material-tailwind/react";
 import Layout from "./components/Layout/Layout";
 import BlogAdmin from "./components/BlogAdmin/BlogAdmin";
-import { Provider } from "react-redux";
-import { store } from "./App/store/store";
 import BlogContentPage from "./components/BlogContentPage/BlogContentPage";
 import BlogEditorPage from "./components/BlogEditorPage/BlogEditorPage";
+import { getAuthStatus } from "./App/feature/authSlice";
+import { useSelector } from "react-redux";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,9 +25,11 @@ const router = createBrowserRouter(
         <Route index element={<HomePage />} />
         <Route path="signup" element={<SignUp />} />
         <Route path="signin" element={<SignIn />} />
-        <Route path="blogpanel" element={<BlogAdmin />} />
-        <Route path="blog" element={<BlogContentPage />} />
-        <Route path="blogeditor" element={<BlogEditorPage />} />
+        <Route element={<CheckAuth />}>
+          <Route path="blogpanel" element={<BlogAdmin />} />
+          <Route path="blog" element={<BlogContentPage />} />
+          <Route path="blogeditor" element={<BlogEditorPage />} />
+        </Route>
       </Route>
     </>
   )
@@ -35,12 +39,15 @@ function App() {
   return (
     <>
       <ThemeProvider>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
+        <RouterProvider router={router} />
       </ThemeProvider>
     </>
   );
 }
 
 export default App;
+
+function CheckAuth() {
+  const { authStatus } = useSelector(getAuthStatus);
+  return authStatus ? <Outlet /> : <Navigate to={"/signin"} />;
+}
