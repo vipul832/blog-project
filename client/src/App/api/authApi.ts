@@ -3,6 +3,7 @@ import {
   AuthLoginSendData,
   AuthReceiveData,
   AuthSendData,
+  SignUpResponse,
 } from "../../utils/types";
 
 export const authApi = createApi({
@@ -11,7 +12,7 @@ export const authApi = createApi({
     baseUrl: `http://localhost:5000/api/auth`,
   }),
   endpoints: (builder) => ({
-    signUpUser: builder.mutation<void, AuthSendData>({
+    signUpUser: builder.mutation<SignUpResponse, AuthSendData>({
       query: (user) => ({
         url: `/register`,
         method: "POST",

@@ -12,13 +12,13 @@ import Pagination from "../../Paginate/Pagination";
 
 export default function HomeTabs() {
   const [activeTab, setActiveTab] = React.useState("view_all");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const { data } = useGetPostsQuery({
     category: activeTab,
-    page: page,
+    page: page + 1,
     limit: 5,
   });
-  console.log("homepage");
+  console.log("homepage", page);
   const totalPage = data?.totalPages;
   const data1 = [
     {
@@ -63,7 +63,7 @@ export default function HomeTabs() {
               value={value}
               onClick={() => {
                 setActiveTab(value);
-                setPage(1);
+                setPage(0);
               }}
               className={`${
                 activeTab === value ? "text-purple-600" : ""

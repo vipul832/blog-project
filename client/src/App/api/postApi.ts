@@ -4,8 +4,7 @@ import {
   FilteredPost,
   AdminPostRequest,
   PostReceived,
-  PostUpdate,
-  PostCurd,
+  Post,
   PostFilter,
 } from "../../utils/types";
 
@@ -37,7 +36,7 @@ export const postApi = createApi({
       providesTags: ["Post"],
     }),
 
-    updateBlog: builder.mutation<void, PostUpdate>({
+    updateBlog: builder.mutation<void, Post>({
       query: (post) => ({
         url: `/update/${post._id}`,
         method: "PUT",
@@ -46,7 +45,7 @@ export const postApi = createApi({
       invalidatesTags: ["Post"],
     }),
 
-    deleteBlog: builder.mutation<void, PostCurd>({
+    deleteBlog: builder.mutation<void, Post>({
       query: (post) => ({
         url: `/delete/${post._id}`,
         method: "DELETE",

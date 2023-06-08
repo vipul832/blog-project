@@ -11,6 +11,7 @@ import { signUpSchema } from "../../validation/signUpSchema";
 import { useState } from "react";
 import ImageInput from "../ImageInput/ImageInput";
 import { useSignUpUserMutation } from "../../App/api/authApi";
+import { toast } from "react-hot-toast";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState<string>("");
@@ -25,17 +26,19 @@ const SignUp = () => {
       checkbox: false,
     },
     validationSchema: signUpSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       if (!profilePic) {
         console.log("Upload image");
         return;
       } else {
-        (async () => {
-          const Data = await signUpUser({ ...values, profilePic });
-          console.log(Data);
-        })();
-        console.log("success added");
-        navigate("/signin");
+        try {
+          const response = await signUpUser({ ...values, profilePic }).unwrap();
+          //toast
+          toast.success(response.message);
+          navigate("/signin");
+        } catch (error: any) {
+          toast.error(error?.data?.message);
+        }
       }
     },
   });

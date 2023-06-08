@@ -18,11 +18,13 @@ import { getUserInfo } from "../../App/feature/userSlice";
 import { useSelector } from "react-redux";
 import { EditorModules, EditorFormats } from "../../constant/constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import { PostUpdate, addPostData } from "../../utils/types";
+import { Post, addPostData } from "../../utils/types";
+import { blogSchema } from "../../validation/blogSchema";
+import { toast } from "react-hot-toast";
 
 export default function BlogEditorPage() {
   const { state } = useLocation();
-  const postData = state as PostUpdate;
+  const postData = state as Post;
   const [thumbnail, setThumbnail] = useState(postData?.thumbnail ?? "");
   const [addPosts] = useAddPostsMutation();
   const userInfo = useSelector(getUserInfo);
@@ -37,42 +39,56 @@ export default function BlogEditorPage() {
       category: postData?.category ?? "",
       username: postData?.username ?? "",
     },
+    validationSchema: blogSchema,
     onSubmit: () => {},
   });
 
-  function handleFormSubmit(status: string, post: PostUpdate) {
+  async function handleFormSubmit(status: string, post: Post) {
     let values = formik.values;
     if (thumbnail) {
       if (status === "publish") {
         if (post) {
-          console.log("in if publish post");
-          updateBlog({
-            ...post,
-            ...values,
-            status: status,
-            visibility: "public",
-            thumbnail: thumbnail,
-          });
+          try {
+            await updateBlog({
+              ...post,
+              ...values,
+              status: status,
+              visibility: "public",
+              thumbnail: thumbnail,
+            });
+            //toast
+            toast.success(`Post ${status} successful`);
+          } catch (error: any) {
+            console.log(error?.data?.message);
+          }
         } else {
-          console.log("in else publish post");
           addPostsToServer(
             values,
             status,
             "public",
             thumbnail,
             userInfo.userId,
-            userInfo.name
+            userInfo.name,
+            userInfo.profileImage
           );
+          //toast
+          toast.success("Post Add successful");
         }
       } else {
         if (post) {
-          updateBlog({
-            ...post,
-            ...values,
-            status: status,
-            visibility: "private",
-            thumbnail: thumbnail,
-          });
+          try {
+            await updateBlog({
+              ...post,
+              ...values,
+              status: status,
+              visibility: "private",
+              thumbnail: thumbnail,
+            });
+            //toast
+            toast.success(`Post ${status} successful`);
+          } catch (error: any) {
+            console.log(error?.data?.message);
+          }
         } else {
           addPostsToServer(
             values,
@@ -80,12 +96,15 @@ export default function BlogEditorPage() {
             "private",
             thumbnail,
             userInfo.userId,
-            userInfo.name
+            userInfo.name,
+            userInfo.profileImage
           );
+          //toast
+          toast.success("Post Add successful");
         }
       }
     } else {
-      console.log("Photo dal");
+      toast.error("Add Thumbnail");
       return;
     }
     navigate("/blogpanel");
@@ -98,16 +117,22 @@ export default function BlogEditorPage() {
     visibility: string,
     thumbnail: string,
     userId: string,
-    username: string
+    username: string,
+    userProfile: string
   ) {
-    await addPosts({
-      ...values,
-      status: status,
-      visibility: visibility,
-      thumbnail: thumbnail,
-      userId: userId,
-      username: username,
-    });
+    try {
+      await addPosts({
+        ...values,
+        status: status,
+        visibility: visibility,
+        thumbnail: thumbnail,
+        userId: userId,
+        username: username,
+        userProfile: userProfile,
+      }).unwrap();
+    } catch (error: any) {
+      console.log(error?.data?.message);
+    }
   }
 
   function handleFormReset() {
@@ -145,6 +170,9 @@ export default function BlogEditorPage() {
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                error={
+                  formik.errors.title && formik.touched.title ? true : false
+                }
               />
             </div>
             <div className="text-start  mt-5">
@@ -156,6 +184,11 @@ export default function BlogEditorPage() {
                 id="category"
                 value={formik.values.category}
                 onChange={(value) => formik.setFieldValue("category", value)}
+                error={
+                  formik.errors.category && formik.touched.category
+                    ? true
+                    : false
+                }
               >
                 <Option value="Software">Software</Option>
                 <Option value="Design">Design</Option>
@@ -173,6 +206,7 @@ export default function BlogEditorPage() {
                 value={formik.values.desc}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                error={formik.errors.desc && formik.touched.desc ? true : false}
               />
             </div>
 

@@ -24,18 +24,18 @@ export default function AdminTags() {
     {
       label: "Publish",
       value: "publish",
-      desc: <BlogInRow data={data ? data : []} />,
+      desc: <BlogInRow data={data ? data : []} tab={activeTab} />,
     },
     {
       label: "Draft",
       value: "draft",
-      desc: <BlogInRow data={data ? data : []} />,
+      desc: <BlogInRow data={data ? data : []} tab={activeTab} />,
     },
   ];
   return (
     <Tabs
       value={activeTab}
-      className="mt-20 mb-16 w-[90%] z-0 backdrop-blur-lg p-4 rounded-md"
+      className="mt-20 mb-16 w-[90%] z-0 backdrop-blur-md p-4 rounded-md"
     >
       <TabsHeader
         className="rounded-none border-b border-blue-gray-50 bg-transparent p-0 items-center lg:w-[40%] overflow-auto"
@@ -57,7 +57,6 @@ export default function AdminTags() {
           </Tab>
         ))}
       </TabsHeader>
-
       <TabsBody>
         {blogTabs.map(({ value, desc }) => (
           <TabPanel key={value} value={value} className="p-0">

@@ -3,23 +3,19 @@ import { getUserInfo } from "../../App/feature/userSlice";
 import { Button, Typography } from "@material-tailwind/react";
 import AdminTabs from "../Tabs/adminTabs/adminTabs";
 import { Link } from "react-router-dom";
-import background from "../../../public/assets/background.jpg";
 
 const BlogAdmin = () => {
   const userInfo = useSelector(getUserInfo);
   return (
-    <div
-      className=" min-h-screen  relative"
-      style={{ backgroundImage: `url(${background})`, backgroundSize: "cover" }}
-    >
+    <div className="blog-admin min-h-screen relative">
       <div className="flex justify-center">
-        <div className="lg:w-[80%] w-[88%] p-2 mt-10 shadow-lg rounded-lg backdrop-blur-lg">
+        <div className="lg:w-[80%] w-[88%] p-2 mt-10 shadow-lg rounded-lg backdrop-blur-md">
           {/* Introduction area */}
           <div className="flex lg:justify-between justify-center h-full px-12 items-center">
             <div>
               <Typography
                 variant={"h3"}
-                className="text-white font-bold whitespace-nowrap"
+                className=" font-bold whitespace-nowrap"
               >
                 Hello,
                 <span className="lg:text-[2.5rem] text-[1.2rem] text-primaryPurple">
@@ -38,7 +34,7 @@ const BlogAdmin = () => {
                     size="md"
                     color="deep-purple"
                   >
-                    Create Blog Here
+                    Write Blog Here
                   </Button>
                 </Link>
               </div>

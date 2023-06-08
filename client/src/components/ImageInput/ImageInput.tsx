@@ -1,6 +1,8 @@
 import React from "react";
 import { IKContext, IKUpload } from "imagekitio-react";
 import { UploadResponse } from "../../utils/types";
+import { toast } from "react-hot-toast";
+
 const environment = import.meta.env;
 
 type ImageInputProps = {
@@ -53,25 +55,26 @@ export default function ImageInput({
           }
           onSuccess={(res: UploadResponse) => {
             setImage(res.url);
-            console.log("in");
+            toast.success("Thumbnail Upload Successful");
           }}
           id="imageOfUser"
           name="img"
           data-max-size="2048"
           type="file"
           onChange={handleFile}
-          // validateFile={(file) => {
-          //   if (
-          //     file.size < 2 * 1024 * 1024 &&
-          //     /[^\s]+(.*?).(jpg|png)$/i.test(file.name)
-          //   ) {
-          //     return true;
-          //   }
-          //   console.log(
-          //     "Image should be less than 2 mb with jpg and png extension"
-          //   );
-          //   return false;
-          // }}
+          validateFile={(file) => {
+            if (
+              // file.size < 2 * 1024 * 1024 &&
+              /[^\s]+(.*?).(jpg|png)$/i.test(file.name)
+            ) {
+              return true;
+            }
+            // console.log(
+            //   "Image should be less than 2 mb with jpg and png extension"
+            // );
+            toast.error("Invalid Thumbnail");
+            return false;
+          }}
         />
       </IKContext>
     </div>

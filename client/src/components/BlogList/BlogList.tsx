@@ -19,6 +19,7 @@ function BlogList({ posts }: BloglistProps) {
               category={value.category}
               img={value.thumbnail}
               blogInfo={value}
+              userProfile={value.userProfile ? value.userProfile : ""}
             />
           );
         })}

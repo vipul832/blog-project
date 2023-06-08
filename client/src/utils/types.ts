@@ -35,7 +35,7 @@ export type PostField = {
   visibility: string;
   userId: string;
   username: string;
-  userPic?: string;
+  userProfile: string;
 };
 
 // POST SEND FOR CURD
@@ -48,9 +48,10 @@ export type PostCurd = {
   visibility: string;
   content: string;
   title: string;
-  updatedAt?: string;
+  updatedAt: string;
   username: string;
-  userId?: string;
+  userId: string;
+  userProfile: string;
   __v?: number;
   _id: string;
 };
@@ -67,8 +68,9 @@ export interface Post {
   status: string;
   userId: string;
   visibility: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
+  userProfile: string;
 }
 
 // LOGIN TYPE
@@ -83,6 +85,11 @@ export type AuthLoginSendData = Omit<AuthSendData, "profilePic" | "username">;
 
 // DATA RECEIVED FROM SERVER TYPE
 export type AuthReceiveData = {
+  user: SignInResponse;
+  message: string;
+};
+
+type SignInResponse = {
   _id: string;
   username: string;
   email: string;
@@ -120,8 +127,8 @@ export type PostReceived = Post[];
 //ADD POST TYPE
 export type SendPost = Omit<Post, "_id" | "createdAt" | "updatedAt">;
 
-// DATA TO UPDATE POST
-export type PostUpdate = Omit<Post, "createdAt" | "updatedAt">;
+// // DATA TO UPDATE POST
+// export type PostUpdate = Omit<Post, "createdAt" | "updatedAt">;
 
 // ADD POST DATA IN SERVER
 export type addPostData = {
@@ -130,4 +137,9 @@ export type addPostData = {
   content: string;
   category: string;
   username: string;
+};
+
+//SIGNUP RESPONSE
+export type SignUpResponse = {
+  message: string;
 };

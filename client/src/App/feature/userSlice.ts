@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
-import { act } from "react-dom/test-utils";
 
 const initialvalue = {
   userId: "",
@@ -14,11 +13,11 @@ const userSlicer = createSlice({
   initialState: initialvalue,
   reducers: {
     setUser: (state, actions) => {
-      state.userId = actions.payload.data._id;
-      state.name = actions.payload.data.username;
-      state.email = actions.payload.data.email;
-      state.profileImage = actions.payload.data.profilePic;
-      console.log("hi", actions.payload.data);
+      state.userId = actions.payload.user._id;
+      state.name = actions.payload.user.username;
+      state.email = actions.payload.user.email;
+      state.profileImage = actions.payload.user.profilePic;
+      console.log("hi", actions.payload.user);
     },
     removeUser: (state) => {
       state.name = "";

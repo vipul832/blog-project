@@ -1,15 +1,11 @@
-import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 
 type paginateProp = {
   totalPage: number;
   setPage: Function;
-  // page:number
 };
 
 export default function Pagination({ totalPage, setPage }: paginateProp) {
-  const [localPage, setLocalPage] = useState(0);
-
   return (
     <div>
       <ReactPaginate
@@ -21,9 +17,8 @@ export default function Pagination({ totalPage, setPage }: paginateProp) {
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         onPageChange={(e) => {
-          setPage(e.selected + 1);
-          setLocalPage(e.selected);
-          // console.log("local", localPage);
+          setPage(e.selected);
+          console.log(e);
         }}
         activeClassName={"bg-primaryPurple text-white"}
         pageClassName={

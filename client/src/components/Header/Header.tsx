@@ -17,6 +17,7 @@ import { getUserInfo, removeUser } from "../../App/feature/userSlice";
 import { getAuthStatus } from "../../App/feature/authSlice";
 import { setSignOutUser } from "../../App/feature/authSlice";
 import { FaPowerOff } from "react-icons/fa";
+import { toast } from "react-hot-toast";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -214,6 +215,7 @@ function ProfileMenu() {
                 closeMenu();
                 dispatch(setSignOutUser());
                 dispatch(removeUser());
+                toast.success("Logout Successful");
               }}
               className={`flex items-center gap-2 rounded ${
                 isLastItem

@@ -6,6 +6,7 @@ import { useLoginUserMutation } from "../../App/api/authApi";
 import { setUser } from "../../App/feature/userSlice";
 import { useDispatch } from "react-redux";
 import { setSignInUser } from "../../App/feature/authSlice";
+import { toast } from "react-hot-toast";
 
 const SignIn = () => {
   const [loginUser] = useLoginUserMutation();
@@ -19,13 +20,14 @@ const SignIn = () => {
     validationSchema: signInSchema,
     onSubmit: async (values) => {
       try {
-        const userInfo = await loginUser(values);
-        console.log(userInfo);
+        const userInfo = await loginUser(values).unwrap();
+        //toast
+        toast.success(userInfo.message);
         dispatch(setUser(userInfo));
         dispatch(setSignInUser());
         navigate("/");
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        toast.error(error?.data?.message);
       }
     },
   });

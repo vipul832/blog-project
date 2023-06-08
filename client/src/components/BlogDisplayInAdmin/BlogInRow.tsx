@@ -1,21 +1,51 @@
 import { Button, Typography } from "@material-tailwind/react";
-import { PostUpdate, Post } from "../../utils/types";
+import { Post } from "../../utils/types";
 import { useNavigate } from "react-router-dom";
 import {
   useDeleteBlogMutation,
   useUpdateBlogMutation,
 } from "../../App/api/postApi";
+import publishError from "../../../public/assets/publish error.svg";
+import draftError from "../../../public/assets/draft error.svg";
+import { toast } from "react-hot-toast";
 
 type BlogInRowProps = {
   data: Post[];
+  tab: string;
 };
 
-export default function BlogInRow({ data }: BlogInRowProps) {
+export default function BlogInRow({ data, tab }: BlogInRowProps) {
   return (
     <>
-      {data.map((blog, index) => {
-        return <BlogTabCard key={index} blog={blog} />;
-      })}
+      {data.length > 0 ? (
+        data.map((blog, index) => {
+          return <BlogTabCard key={index} blog={blog} />;
+        })
+      ) : tab === "publish" ? (
+        <div className="text-center">
+          <Typography
+            className="text-2xl font-bold mt-8 tracking-[0.1rem]"
+            variant="paragraph"
+          >
+            Write Some Blog
+          </Typography>
+          <div className="flex justify-center mt-8">
+            <img src={publishError} alt="publish error" width="500px" />
+          </div>
+        </div>
+      ) : (
+        <div className="text-center">
+          <Typography
+            className="text-2xl font-bold mt-8 tracking-[0.1rem]"
+            variant="paragraph"
+          >
+            All Work Done
+          </Typography>
+          <div className="flex justify-center mt-8">
+            <img src={draftError} alt="publish error" width="500px" />
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -63,7 +93,18 @@ function BlogTabCard({ blog }: blogTabCardProps) {
             size="sm"
             className="mx-2"
             color="deep-purple"
-            onClick={() => deleteBlog(blog)}
+            onClick={async () => {
+              /*toast */
+              const response = window.confirm(
+                ` Are you sure you want to Delete? "${blog.title}"`
+              );
+              if (response) {
+                await deleteBlog(blog);
+                toast.success("Post DeleteSuccessful");
+              } else {
+                toast.success("Post Delete Canceled");
+              }
+            }}
           >
             Delete
           </Button>
@@ -72,13 +113,14 @@ function BlogTabCard({ blog }: blogTabCardProps) {
               size="sm"
               className="mx-2"
               color="deep-purple"
-              onClick={() => {
-                console.log(blog);
-                updateBlog({
+              onClick={async () => {
+                await updateBlog({
                   ...blog,
                   status: "publish",
                   visibility: "public",
-                } as PostUpdate);
+                });
+                /*toast */
+                toast.success("Post Publish Successful");
               }}
             >
               Published

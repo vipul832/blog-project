@@ -17,6 +17,7 @@ import BlogContentPage from "./components/BlogContentPage/BlogContentPage";
 import BlogEditorPage from "./components/BlogEditorPage/BlogEditorPage";
 import { getAuthStatus } from "./App/feature/authSlice";
 import { useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
