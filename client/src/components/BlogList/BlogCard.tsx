@@ -64,15 +64,8 @@ export default function BlogCard({
             </Button>
           </div>
         </div>
-        <div
-          className="mt-2 text-sm"
-          dangerouslySetInnerHTML={{
-            __html: `${
-              body.length <= 18 ? body : body.substring(0, 100) + "..."
-            }`,
-          }}
-        >
-          {/* {body.length <= 18 ? "" : body.substr(0, 100) + "..."} */}
+        <div className="mt-2 text-sm">
+          {body.length <= 18 ? body : body.substring(0, 100) + "..."}
         </div>
       </CardBody>
       <CardFooter className="py-0 pb-2">

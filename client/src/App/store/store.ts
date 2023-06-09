@@ -3,6 +3,7 @@ import userReducer from "../feature/userSlice";
 import { postApi } from "../api/postApi";
 import { authApi } from "../api/authApi";
 import authReducer from "../feature/authSlice";
+import searchReducer from "../feature/searchSlice";
 import {
   persistStore,
   persistReducer,
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
+  search: searchReducer,
   [postApi.reducerPath]: postApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
 });

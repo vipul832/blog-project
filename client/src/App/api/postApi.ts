@@ -17,7 +17,7 @@ export const postApi = createApi({
   endpoints: (builder) => ({
     getPosts: builder.query<FilteredPost, PostFilter>({
       query: (filter) =>
-        `/?cat=${filter.category}&page=${filter.page}&limit=${filter.limit}`,
+        `/?cat=${filter.category}&page=${filter.page}&limit=${filter.limit}&search=${filter.search}`,
       providesTags: ["Post"],
     }),
 

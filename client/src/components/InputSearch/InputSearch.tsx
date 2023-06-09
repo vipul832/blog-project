@@ -1,4 +1,18 @@
+import { setSearch } from "../../App/feature/searchSlice";
+import { useDispatch } from "react-redux";
+import { debounce } from "lodash";
+
 const InputSearch = () => {
+  const dispatch = useDispatch();
+
+  const debouncedSearch = debounce((criteria) => {
+    dispatch(setSearch(criteria));
+  }, 300);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    debouncedSearch(e.target.value);
+  }
+
   return (
     <div className="flex justify-center pt-8">
       <div className="relative md:w-[25%] w-[60%]">
@@ -22,7 +36,7 @@ const InputSearch = () => {
           id="simple-search"
           className="bg-gray-50 border border-gray-300 text-primaryPurple text-sm rounded-lg block w-full pl-10 p-2.5 focus:outline-primaryPurple font-bold"
           placeholder="Search"
-          required
+          onChange={handleChange}
         />
       </div>
     </div>

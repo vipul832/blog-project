@@ -8,6 +8,7 @@ import {
 import publishError from "../../../public/assets/publish error.svg";
 import draftError from "../../../public/assets/draft error.svg";
 import { toast } from "react-hot-toast";
+import DeleteConfirm from "../modelForDelete/DeleteConfirm";
 
 type BlogInRowProps = {
   data: Post[];
@@ -62,7 +63,13 @@ function BlogTabCard({ blog }: blogTabCardProps) {
     <div className="mt-10">
       <div className="lg:flex lg:justify-between">
         <div className="lg:flex lg:w-[70%] w-full items-center">
-          <img src={blog.thumbnail} alt="" className="w-60 rounded-lg h-40" />
+          <img
+            src={blog.thumbnail}
+            alt="thumbnail"
+            className="rounded-lg object-cover"
+            width="250px"
+            height="160px"
+          />
           <div className="md:ms-5 mt-3">
             <Typography className={"text-primaryPurple font-bold"}>
               {blog.category}
@@ -89,25 +96,8 @@ function BlogTabCard({ blog }: blogTabCardProps) {
           >
             Edit
           </Button>
-          <Button
-            size="sm"
-            className="mx-2"
-            color="deep-purple"
-            onClick={async () => {
-              /*toast */
-              const response = window.confirm(
-                ` Are you sure you want to Delete? "${blog.title}"`
-              );
-              if (response) {
-                await deleteBlog(blog);
-                toast.success("Post DeleteSuccessful");
-              } else {
-                toast.success("Post Delete Canceled");
-              }
-            }}
-          >
-            Delete
-          </Button>
+          <DeleteConfirm blog={blog} />
+
           {blog.status === "publish" ? null : (
             <Button
               size="sm"

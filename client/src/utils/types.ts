@@ -104,6 +104,7 @@ export type PostFilter = {
   category: string;
   limit?: number;
   page?: number;
+  search?: string;
 };
 
 //FILTER DATA RESPONSE TYPE

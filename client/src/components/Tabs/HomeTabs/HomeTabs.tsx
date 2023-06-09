@@ -9,16 +9,21 @@ import {
 import BlogList from "../../BlogList/BlogList";
 import { useGetPostsQuery } from "../../../App/api/postApi";
 import Pagination from "../../Paginate/Pagination";
+import { useSelector } from "react-redux";
+import { getSearchText } from "../../../App/feature/searchSlice";
+import HomeShimmer from "../../shimmer ui/HomeShimmer";
 
 export default function HomeTabs() {
   const [activeTab, setActiveTab] = React.useState("view_all");
+  const { search } = useSelector(getSearchText);
   const [page, setPage] = useState(0);
-  const { data } = useGetPostsQuery({
+  const { data, isFetching } = useGetPostsQuery({
     category: activeTab,
     page: page + 1,
     limit: 5,
+    search: search,
   });
-  console.log("homepage", page);
+  // console.log("homepage", page);
   const totalPage = data?.totalPages;
   const data1 = [
     {
@@ -73,14 +78,15 @@ export default function HomeTabs() {
             </Tab>
           ))}
         </TabsHeader>
-
         <TabsBody>
-          {data1?.map(({ value, desc }) => (
-            <TabPanel key={value} value={value} className="p-0">
-              {desc}
-            </TabPanel>
-          ))}
-          {totalPage! > 1 ? (
+          {isFetching && <HomeShimmer />}
+          {!isFetching &&
+            data1?.map(({ value, desc }) => (
+              <TabPanel key={value} value={value} className="p-0">
+                {desc}
+              </TabPanel>
+            ))}
+          {!isFetching && totalPage! > 1 ? (
             <Pagination
               totalPage={totalPage ? totalPage : 0}
               setPage={setPage}
