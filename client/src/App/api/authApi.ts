@@ -9,7 +9,7 @@ import {
 export const authApi = createApi({
   reducerPath: "authApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:5000/api/auth`,
+    baseUrl: `https://blog-backend-vipulc8.vercel.app/api/auth`,
   }),
   endpoints: (builder) => ({
     signUpUser: builder.mutation<SignUpResponse, AuthSendData>({

@@ -20,7 +20,7 @@ export default function HomeTabs() {
   const { data, isFetching } = useGetPostsQuery({
     category: activeTab,
     page: page + 1,
-    limit: 10,
+    limit: 5,
     search: search,
   });
   console.log(search);

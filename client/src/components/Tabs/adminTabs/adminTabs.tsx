@@ -7,15 +7,16 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 
-import BlogInRow from "../../AdminBlogList/AdminBlogList";
+import AdminBlogList from "../../AdminBlogList/AdminBlogList";
 import { getUserInfo } from "../../../App/feature/userSlice";
 import { useSelector } from "react-redux";
 import { useGetAdminBlogsQuery } from "../../../App/api/postApi";
+import AdminShimmer from "../../Shimmer/AdminShimmer";
 
 export default function AdminTags() {
   const [activeTab, setActiveTab] = React.useState("publish");
   const userInfo = useSelector(getUserInfo);
-  const { data } = useGetAdminBlogsQuery({
+  const { data, isFetching } = useGetAdminBlogsQuery({
     id: userInfo.userId,
     status: activeTab,
   });
@@ -24,12 +25,12 @@ export default function AdminTags() {
     {
       label: "Publish",
       value: "publish",
-      desc: <BlogInRow data={data ? data : []} tab={activeTab} />,
+      desc: <AdminBlogList data={data ? data : []} tab={activeTab} />,
     },
     {
       label: "Draft",
       value: "draft",
-      desc: <BlogInRow data={data ? data : []} tab={activeTab} />,
+      desc: <AdminBlogList data={data ? data : []} tab={activeTab} />,
     },
   ];
   return (
@@ -58,11 +59,13 @@ export default function AdminTags() {
         ))}
       </TabsHeader>
       <TabsBody>
-        {blogTabs.map(({ value, desc }) => (
-          <TabPanel key={value} value={value} className="p-0">
-            {desc}
-          </TabPanel>
-        ))}
+        {isFetching && <AdminShimmer />}
+        {!isFetching &&
+          blogTabs.map(({ value, desc }) => (
+            <TabPanel key={value} value={value} className="p-0">
+              {desc}
+            </TabPanel>
+          ))}
       </TabsBody>
     </Tabs>
   );

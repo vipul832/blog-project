@@ -12,7 +12,7 @@ export const postApi = createApi({
   reducerPath: "postApi",
   tagTypes: ["Post"],
   baseQuery: fetchBaseQuery({
-    baseUrl: `http://localhost:5000/api/posts`,
+    baseUrl: `https://blog-backend-vipulc8.vercel.app/api/posts`,
   }),
   endpoints: (builder) => ({
     getPosts: builder.query<FilteredPost, PostFilter>({
