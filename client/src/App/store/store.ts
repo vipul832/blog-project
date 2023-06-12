@@ -16,11 +16,6 @@ import {
 } from "redux-persist";
 import localStorage from "redux-persist/es/storage";
 
-const persistConfig = {
-  key: "root",
-  storage: localStorage,
-};
-
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
@@ -28,6 +23,12 @@ const rootReducer = combineReducers({
   [postApi.reducerPath]: postApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
 });
+
+const persistConfig = {
+  key: "root",
+  whitelist: ["auth", "user"],
+  storage: localStorage,
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

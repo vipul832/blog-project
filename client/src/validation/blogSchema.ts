@@ -5,5 +5,5 @@ export const blogSchema = Yup.object().shape({
   desc: Yup.string()
     .min(10, "Must be 10 characters or More")
     .required("Description is required !"),
-  category: Yup.string().required("Category is Required"),
+  category: Yup.string().required("Category is Required"),  
 });

@@ -31,7 +31,7 @@ export default function DeleteModel({ blog }: deleteProps) {
         size="sm"
         color="deep-purple"
       >
-        Open Dialog
+        Delete
       </Button>
       <Dialog open={open} handler={toggler}>
         <DialogHeader>Are you sure you want to delete?</DialogHeader>

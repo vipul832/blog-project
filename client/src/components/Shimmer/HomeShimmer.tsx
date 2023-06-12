@@ -1,3 +1,4 @@
+import React from "react";
 const dummyPost = Array.from({ length: 10 });
 
 const HomeShimmer = () => {
@@ -6,11 +7,8 @@ const HomeShimmer = () => {
       <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 md:ms-0 ms-5 mb-5 min-h-screen">
         {dummyPost.map((_, index) => {
           return (
-            <>
-              <div
-                className="xl:w-[24rem] lg:w-[20rem] mt-5 p-2 m-5 animate-pulse"
-                key={index}
-              >
+            <React.Fragment key={index + Math.random()}>
+              <div className="xl:w-[24rem] lg:w-[20rem] mt-5 p-2 m-5 animate-pulse">
                 <div>
                   <div className="w-full h-[200px] bg-gray-500 rounded-md"></div>
                 </div>
@@ -35,7 +33,7 @@ const HomeShimmer = () => {
                   </div>
                 </div>
               </div>
-            </>
+            </React.Fragment>
           );
         })}
       </div>
