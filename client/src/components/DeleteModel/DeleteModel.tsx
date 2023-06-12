@@ -14,7 +14,7 @@ type deleteProps = {
   blog: Post;
 };
 
-export default function DeleterConfirm({ blog }: deleteProps) {
+export default function DeleteModel({ blog }: deleteProps) {
   const [open, toggler] = useReducer((state) => !state, false);
   const [deleteBlog] = useDeleteBlogMutation();
   const handleConfirmDelete = async () => {

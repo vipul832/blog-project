@@ -5,19 +5,12 @@ import {
   Button,
   IconButton,
   Collapse,
-  Avatar,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
 } from "@material-tailwind/react";
 import { NavLink, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserInfo, removeUser } from "../../App/feature/userSlice";
+import { useSelector } from "react-redux";
 import { getAuthStatus } from "../../App/feature/authSlice";
-import { setSignOutUser } from "../../App/feature/authSlice";
-import { FaPowerOff } from "react-icons/fa";
-import { toast } from "react-hot-toast";
+
+import ProfileMenu from "./ProfileMenu";
 
 export default function Header() {
   const [openNav, setOpenNav] = React.useState(false);
@@ -64,22 +57,25 @@ export default function Header() {
     <Navbar className="sticky inset-0 z-10 h-max max-w-full rounded-none py-2 px-4 lg:px-8 lg:py-4 shadow-none">
       <div className="flex items-center lg:justify-around justify-between text-blue-gray-900">
         <div className="flex items-center gap-4">
-          <div className="main-logo flex items-center">
-            <div className="logo-img-div relative w-8 h-8 rounded-lg items-center overflow-hidden flex justify-center">
-              <img
-                className="logo-img"
-                src="./assets/logo.svg"
-                alt="logo"
-                width="32"
-                height="32"
-              />
-              <div className="logo-blur-rectangle z-[2] w-full h-1/2 backdrop-blur-[3px] absolute top-1/2 bottom-0 left-0 right-0 "></div>
-              <div className="logo-dot z-[1] w-1/2 h-1/2 bg-red-500 rounded-[50%] absolute bg-gradient-to-r from-primaryPurple to-[#53389e]"></div>
+          <Link to={"/"}>
+            <div className="main-logo flex items-center">
+              <div className="logo-img-div relative w-8 h-8 rounded-lg items-center overflow-hidden flex justify-center">
+                <img
+                  className="logo-img"
+                  src="./assets/logo.svg"
+                  alt="logo"
+                  width="32"
+                  height="32"
+                />
+                <div className="logo-blur-rectangle z-[2] w-full h-1/2 backdrop-blur-[3px] absolute top-1/2 bottom-0 left-0 right-0 "></div>
+                <div className="logo-dot z-[1] w-1/2 h-1/2 bg-red-500 rounded-[50%] absolute bg-gradient-to-r from-primaryPurple to-[#53389e]"></div>
+              </div>
+
+              <Typography className="logo-text ms-2 font-medium font-inter">
+                GrandTalk's
+              </Typography>
             </div>
-            <Typography className="logo-text ms-2 font-medium font-inter">
-              GrandTalk's
-            </Typography>
-          </div>
+          </Link>
           <div className="mr-4 hidden lg:block">{navList}</div>
         </div>
         <div className="flex items-center gap-4">
@@ -173,69 +169,5 @@ export default function Header() {
         )}
       </Collapse>
     </Navbar>
-  );
-}
-
-const profileMenuItems = [
-  {
-    label: "Sign Out",
-    icon: <FaPowerOff className="text-red-500" />,
-  },
-];
-
-function ProfileMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const closeMenu = () => setIsMenuOpen(false);
-  const userInfo = useSelector(getUserInfo);
-  const dispatch = useDispatch();
-  return (
-    <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-      <MenuHandler>
-        <Button
-          variant="text"
-          color="blue-gray"
-          className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto"
-        >
-          <Avatar
-            variant="circular"
-            size="sm"
-            alt="candice wu"
-            className="border border-blue-500 p-0.5"
-            src={userInfo.profileImage}
-          />
-        </Button>
-      </MenuHandler>
-      <MenuList className="p-1">
-        {profileMenuItems.map(({ label, icon }, key) => {
-          const isLastItem = key === profileMenuItems.length - 1;
-          return (
-            <MenuItem
-              key={label}
-              onClick={() => {
-                closeMenu();
-                dispatch(setSignOutUser());
-                dispatch(removeUser());
-                toast.success("Logout Successful");
-              }}
-              className={`flex items-center gap-2 rounded ${
-                isLastItem
-                  ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
-                  : ""
-              }`}
-            >
-              {icon}
-              <Typography
-                as="span"
-                variant="small"
-                className="font-normal"
-                color={isLastItem ? "red" : "inherit"}
-              >
-                {label}
-              </Typography>
-            </MenuItem>
-          );
-        })}
-      </MenuList>
-    </Menu>
   );
 }

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store/store";
-import { act } from "react-dom/test-utils";
 
 const initialvalue = {
   search: "",

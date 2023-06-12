@@ -6,16 +6,19 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useFormik } from "formik";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { signUpSchema } from "../../validation/signUpSchema";
 import { useState } from "react";
 import ImageInput from "../ImageInput/ImageInput";
 import { useSignUpUserMutation } from "../../App/api/authApi";
 import { toast } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { getAuthStatus } from "../../App/feature/authSlice";
 
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState<string>("");
   const [signUpUser] = useSignUpUserMutation();
+  const { authStatus } = useSelector(getAuthStatus);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -42,6 +45,10 @@ const SignUp = () => {
       }
     },
   });
+
+  if (authStatus) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <div className="min-h-screen relative flex justify-center items-center my-20">

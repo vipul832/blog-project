@@ -6,13 +6,12 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
-import "./App.css";
 import HomePage from "./components/Home/HomePage";
 import SignUp from "./components/SignUp/SignUp";
 import SignIn from "./components/SignIn/SignIn";
 import { ThemeProvider } from "@material-tailwind/react";
 import Layout from "./components/Layout/Layout";
-import BlogAdmin from "./components/BlogAdmin/BlogAdmin";
+import BlogAdmin from "./components/AdminPage/AdminPage";
 import BlogContentPage from "./components/BlogContentPage/BlogContentPage";
 import BlogEditorPage from "./components/BlogEditorPage/BlogEditorPage";
 import { getAuthStatus } from "./App/feature/authSlice";

@@ -8,8 +8,9 @@ import {
   Button,
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
-import { PostField } from "../../utils/types";
+import { Post } from "../../utils/types";
 import { BsArrowUpRight } from "react-icons/bs";
+import moment from "moment";
 
 type BlogCardProp = {
   title: string;
@@ -17,7 +18,7 @@ type BlogCardProp = {
   id: string;
   category: string;
   img: string;
-  blogInfo: PostField;
+  blogInfo: Post;
   userProfile: string;
 };
 
@@ -32,7 +33,10 @@ export default function BlogCard({
 }: BlogCardProp) {
   const navigate = useNavigate();
   return (
-    <Card className="xl:w-[24rem] lg:w-[20rem] shadow-none mt-5 m-5" id={id}>
+    <Card
+      className="xl:w-[24rem] lg:w-[20rem] shadow-none mt-5 m-5 h-full"
+      id={id}
+    >
       <CardHeader className="p-0" floated={false} shadow={false}>
         <img
           src={img}
@@ -81,7 +85,9 @@ export default function BlogCard({
             <Typography className="text-sm font-bold text-black">
               {blogInfo.username}
             </Typography>
-            <Typography className="text-sm">20 Jan 2024</Typography>
+            <Typography className="text-sm">
+              {moment(blogInfo.createdAt).format("Do MMM YY")}
+            </Typography>
           </div>
         </div>
       </CardFooter>

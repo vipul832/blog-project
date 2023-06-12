@@ -24,37 +24,37 @@ export type UploadResponse = {
 
 // ****** UPDATED TYPES OF CURRENT DATA  ******
 
-//GENERAL POST DATA REQUIRED
-export type PostField = {
-  title: string;
-  desc: string;
-  content: string;
-  category: string;
-  thumbnail: string;
-  status: string;
-  visibility: string;
-  userId: string;
-  username: string;
-  userProfile: string;
-};
+// //GENERAL POST DATA REQUIRED
+// export type PostField = {
+//   title: string;
+//   desc: string;
+//   content: string;
+//   category: string;
+//   thumbnail: string;
+//   status: string;
+//   visibility: string;
+//   userId: string;
+//   username: string;
+//   userProfile: string;
+// };
 
 // POST SEND FOR CURD
-export type PostCurd = {
-  category: string;
-  createdAt: string;
-  desc: string;
-  thumbnail: string;
-  status: string;
-  visibility: string;
-  content: string;
-  title: string;
-  updatedAt: string;
-  username: string;
-  userId: string;
-  userProfile: string;
-  __v?: number;
-  _id: string;
-};
+// export type PostCurd = {
+//   category: string;
+//   createdAt: string;
+//   desc: string;
+//   thumbnail: string;
+//   status: string;
+//   visibility: string;
+//   content: string;
+//   title: string;
+//   updatedAt: string;
+//   username: string;
+//   userId: string;
+//   userProfile: string;
+//   __v?: number;
+//   _id: string;
+// };
 
 //RECEIVED POST TYPE
 export interface Post {

@@ -24,7 +24,6 @@ function BlogList({ posts }: BloglistProps) {
           );
         })}
       </div>
-      {/* <hr className="bg-gray-700 my-3" /> */}
     </div>
   );
 }

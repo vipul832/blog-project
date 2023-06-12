@@ -10,6 +10,7 @@ export const EditorModules = {
       { indent: "+1" },
       { align: ["", "right", "center", "justify"] },
     ],
+    ["code"],
     ["link", "image", "video"],
     ["clean"],
   ],
@@ -35,5 +36,6 @@ export const EditorFormats = [
   "image",
   "video",
   "align",
+  "code",
   "direction",
 ];

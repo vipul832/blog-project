@@ -1,15 +1,16 @@
 import { Card, Input, Button, Typography } from "@material-tailwind/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { signInSchema } from "../../validation/signInSchema";
 import { useLoginUserMutation } from "../../App/api/authApi";
 import { setUser } from "../../App/feature/userSlice";
-import { useDispatch } from "react-redux";
-import { setSignInUser } from "../../App/feature/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { getAuthStatus, setSignInUser } from "../../App/feature/authSlice";
 import { toast } from "react-hot-toast";
 
 const SignIn = () => {
   const [loginUser] = useLoginUserMutation();
+  const { authStatus } = useSelector(getAuthStatus);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const formik = useFormik({
@@ -31,6 +32,10 @@ const SignIn = () => {
       }
     },
   });
+
+  if (authStatus) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <div className="min-h-screen relative flex justify-center items-center">

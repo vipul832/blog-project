@@ -4,7 +4,7 @@ import { Button, Typography } from "@material-tailwind/react";
 import AdminTabs from "../Tabs/adminTabs/adminTabs";
 import { Link } from "react-router-dom";
 
-const BlogAdmin = () => {
+const AdminPage = () => {
   const userInfo = useSelector(getUserInfo);
   return (
     <div className="blog-admin min-h-screen relative">
@@ -52,4 +52,4 @@ const BlogAdmin = () => {
   );
 };
 
-export default BlogAdmin;
+export default AdminPage;

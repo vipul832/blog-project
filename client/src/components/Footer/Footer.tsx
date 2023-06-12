@@ -2,16 +2,12 @@ import { Typography } from "@material-tailwind/react";
 
 const LINKS = [
   {
-    title: "Product",
-    items: ["Overview", "Features", "Solutions", "Tutorials"],
-  },
-  {
     title: "Company",
-    items: ["About us", "Careers", "Press", "News"],
+    items: ["About us"],
   },
   {
     title: "Resource",
-    items: ["Blog", "Newsletter", "Events", "Help center"],
+    items: ["Blog"],
   },
 ];
 

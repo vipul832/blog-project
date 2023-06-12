@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 export const signUpSchema = Yup.object().shape({
   username: Yup.string()
-    .min(10, "Must be 15 characters or More")
+    .min(10, "Must be 10 characters or More")
     .matches(/[a-zA-Z]+/, "Invalid Name")
     .required("User name is required !"),
   email: Yup.string()

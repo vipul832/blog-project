@@ -11,7 +11,7 @@ import { useGetPostsQuery } from "../../../App/api/postApi";
 import Pagination from "../../Paginate/Pagination";
 import { useSelector } from "react-redux";
 import { getSearchText } from "../../../App/feature/searchSlice";
-import HomeShimmer from "../../shimmer ui/HomeShimmer";
+import HomeShimmer from "../../Shimmer/HomeShimmer";
 
 export default function HomeTabs() {
   const [activeTab, setActiveTab] = React.useState("view_all");
@@ -20,7 +20,7 @@ export default function HomeTabs() {
   const { data, isFetching } = useGetPostsQuery({
     category: activeTab,
     page: page + 1,
-    limit: 5,
+    limit: 10,
     search: search,
   });
   // console.log("homepage", page);

@@ -1,7 +1,7 @@
 import { Typography } from "@material-tailwind/react";
 import InputSearch from "../InputSearch/InputSearch";
 
-export default function IntroEmail() {
+export default function IntroTitle() {
   return (
     <div className=" text-center pt-20">
       <Typography color="deep-purple" className="font-semibold">

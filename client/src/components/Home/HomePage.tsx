@@ -1,10 +1,10 @@
 import HomeTabs from "../Tabs/HomeTabs/HomeTabs";
-import IntroEmail from "../Intro/IntroEmail";
+import IntroTitle from "../Intro/IntroTitle";
 
 const HomePage = () => {
   return (
     <>
-      <IntroEmail />
+      <IntroTitle />
       <HomeTabs />
     </>
   );

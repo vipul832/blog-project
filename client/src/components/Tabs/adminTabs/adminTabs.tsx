@@ -7,7 +7,7 @@ import {
   TabPanel,
 } from "@material-tailwind/react";
 
-import BlogInRow from "../../BlogDisplayInAdmin/BlogInRow";
+import BlogInRow from "../../AdminBlogList/AdminBlogList";
 import { getUserInfo } from "../../../App/feature/userSlice";
 import { useSelector } from "react-redux";
 import { useGetAdminBlogsQuery } from "../../../App/api/postApi";
