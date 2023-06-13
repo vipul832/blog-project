@@ -20,10 +20,10 @@ export default function HomeTabs() {
   const { data, isFetching } = useGetPostsQuery({
     category: activeTab,
     page: page + 1,
-    limit: 5,
+    limit: 10,
     search: search,
   });
-  console.log(search);
+  console.log("home page", page);
   const totalPage = data?.totalPages;
   const data1 = [
     {
@@ -90,6 +90,7 @@ export default function HomeTabs() {
             <Pagination
               totalPage={totalPage ? totalPage : 0}
               setPage={setPage}
+              page={page}
             />
           ) : null}
         </TabsBody>

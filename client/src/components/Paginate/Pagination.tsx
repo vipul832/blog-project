@@ -1,19 +1,20 @@
 import ReactPaginate from "react-paginate";
 
 type paginateProp = {
-  totalPage: number;
+  totalPage: number | 0;
   setPage: Function;
+  page: number;
 };
 
-export default function Pagination({ totalPage, setPage }: paginateProp) {
+export default function Pagination({ totalPage, setPage, page }: paginateProp) {
   return (
-    <div>
+    <div className="flex justify-center">
       <ReactPaginate
         previousLabel={"Previous"}
         nextLabel={"Next"}
         breakLabel={"..."}
         pageCount={totalPage} // total number of page
-        className="flex gap-3 items-center justify-center"
+        className="flex gap-3 items-center lg:justify-center justify-around"
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         onPageChange={(e) => {
@@ -22,14 +23,15 @@ export default function Pagination({ totalPage, setPage }: paginateProp) {
         }}
         activeClassName={"bg-primaryPurple text-white"}
         pageClassName={
-          "div w-10 rounded-full flex justify-center hover:bg-primaryPurple hover:text-white p-2"
+          "page-li w-10 rounded-full flex justify-center hover:bg-primaryPurple hover:text-white p-2"
         }
         previousClassName={
-          "border p-2 rounded  border-primaryPurple hover:bg-primaryPurple hover:text-white mr-40"
+          "page-previous border p-2 rounded  border-primaryPurple hover:bg-primaryPurple hover:text-white lg:mr-40 "
         }
         nextClassName={
-          "border p-2 rounded  border-primaryPurple hover:bg-primaryPurple hover:text-white ms-40"
+          "page-next border p-2 rounded  border-primaryPurple hover:bg-primaryPurple hover:text-white lg:ms-40 "
         }
+        forcePage={page === 0 ? 0 : page}
       />
     </div>
   );

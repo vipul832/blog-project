@@ -34,7 +34,7 @@ export default function BlogCard({
   const navigate = useNavigate();
   return (
     <Card
-      className="xl:w-[24rem] lg:w-[20rem] shadow-none mt-5 m- xl:h-[28rem] lg:h-[20rem] flex flex-col"
+      className="xl:w-[24rem] lg:w-[20rem] shadow-none mt-5 m- xl:h-[28rem] flex flex-col"
       id={id}
     >
       <CardHeader className="p-0" floated={false} shadow={false}>
