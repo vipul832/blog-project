@@ -7,9 +7,14 @@ import { setUser } from "../../App/feature/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getAuthStatus, setSignInUser } from "../../App/feature/authSlice";
 import { toast } from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
 
 const handleGoogle = () => {
   window.open(`http://localhost:5000/api/auth/google`, "_self");
+};
+const handleGitHub = () => {
+  window.open(`http://localhost:5000/api/auth/github`, "_self");
 };
 
 const SignIn = () => {
@@ -115,7 +120,27 @@ const SignIn = () => {
               </Link>
             </Typography>
           </form>
-          <Button onClick={handleGoogle}>Google</Button>
+          <div>
+            <p className="font-bold text-center">OR</p>
+            <hr className="w-full rounded bg-gray-500 my-2" />
+          </div>
+
+          <Button
+            className="mt-2 flex justify-center items-center"
+            color="deep-purple"
+            onClick={handleGoogle}
+          >
+            <FcGoogle className="text-lg mr-2" />
+            Sign in with Google
+          </Button>
+          <Button
+            className="mt-2 flex justify-center items-center"
+            color="deep-purple"
+            onClick={handleGitHub}
+          >
+            <AiFillGithub className="text-lg mr-2" />
+            Sign in with GitHub
+          </Button>
         </Card>
       </div>
     </div>

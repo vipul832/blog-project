@@ -162,7 +162,7 @@ export default function Header() {
                 className="mb-2 w-20 whitespace-nowrap"
                 color="deep-purple"
               >
-                <span>Log In</span>
+                <span>Sign In</span>
               </Button>
             </Link>
           </>

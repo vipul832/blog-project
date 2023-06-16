@@ -57,7 +57,7 @@ export default function ProfileMenu() {
                 closeMenu();
                 dispatch(removeUser());
                 dispatch(setSignOutUser());
-                if (userInfo.type === "google") {
+                if (userInfo.type === "google" || userInfo.type === "github") {
                   logout();
                   localStorage.clear();
                 }

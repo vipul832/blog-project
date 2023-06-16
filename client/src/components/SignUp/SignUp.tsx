@@ -14,9 +14,14 @@ import { useSignUpUserMutation } from "../../App/api/authApi";
 import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { getAuthStatus } from "../../App/feature/authSlice";
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
 
 const handleGoogle = () => {
   window.open(`http://localhost:5000/api/auth/signup/google/callback`, "_self");
+};
+const handleGitHub = () => {
+  window.open(`http://localhost:5000/api/auth/github/callback`, "_self");
 };
 
 const SignUp = () => {
@@ -111,7 +116,7 @@ const SignUp = () => {
               />
               {formik.errors.email && formik.touched.email ? (
                 <span className="text-red-500 text-sm">
-                  {formik.errors.email}
+                  {formik.errors.email} console.log(user.user);
                 </span>
               ) : null}
 
@@ -211,7 +216,28 @@ const SignUp = () => {
               </Link>
             </Typography>
           </form>
-          <Button onClick={handleGoogle}>Google</Button>
+
+          <div>
+            <p className="font-bold text-center">OR</p>
+            <hr className="w-full rounded bg-gray-500 my-2" />
+          </div>
+
+          <Button
+            className="mt-2 flex justify-center items-center"
+            color="deep-purple"
+            onClick={handleGoogle}
+          >
+            <FcGoogle className="text-lg mr-2" />
+            Sign up with Google
+          </Button>
+          <Button
+            className="mt-2 flex justify-center items-center"
+            color="deep-purple"
+            onClick={handleGitHub}
+          >
+            <AiFillGithub className="text-lg mr-2" />
+            Sign up with GitHub
+          </Button>
         </Card>
       </div>
     </div>
