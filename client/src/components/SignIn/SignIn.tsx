@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuthStatus, setSignInUser } from "../../App/feature/authSlice";
 import { toast } from "react-hot-toast";
 
+const handleGoogle = () => {
+  window.open(`http://localhost:5000/api/auth/google`, "_self");
+};
+
 const SignIn = () => {
   const [loginUser] = useLoginUserMutation();
   const { authStatus } = useSelector(getAuthStatus);
@@ -111,6 +115,7 @@ const SignIn = () => {
               </Link>
             </Typography>
           </form>
+          <Button onClick={handleGoogle}>Google</Button>
         </Card>
       </div>
     </div>

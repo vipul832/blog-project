@@ -15,6 +15,10 @@ import { toast } from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { getAuthStatus } from "../../App/feature/authSlice";
 
+const handleGoogle = () => {
+  window.open(`http://localhost:5000/api/auth/signup/google/callback`, "_self");
+};
+
 const SignUp = () => {
   const [profilePic, setProfilePic] = useState<string>("");
   const [signUpUser] = useSignUpUserMutation();
@@ -207,6 +211,7 @@ const SignUp = () => {
               </Link>
             </Typography>
           </form>
+          <Button onClick={handleGoogle}>Google</Button>
         </Card>
       </div>
     </div>

@@ -6,6 +6,7 @@ const initialvalue = {
   name: "",
   email: "",
   profileImage: "",
+  type: "normal",
 };
 
 const userSlicer = createSlice({
@@ -17,13 +18,15 @@ const userSlicer = createSlice({
       state.name = actions.payload.user.username;
       state.email = actions.payload.user.email;
       state.profileImage = actions.payload.user.profilePic;
-      console.log("hi", actions.payload.user);
+      state.type = actions.payload.user.type;
+      console.log("hi", actions.payload);
     },
     removeUser: (state) => {
       state.name = "";
       state.userId = "";
       state.email = "";
       state.profileImage = "";
+      state.type = "";
     },
   },
 });

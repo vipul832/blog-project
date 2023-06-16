@@ -14,6 +14,10 @@ import { setSignOutUser } from "../../App/feature/authSlice";
 import { FaPowerOff } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 
+const logout = async () => {
+  window.open("http://localhost:5000/api/auth/logout", "_self");
+};
+
 const profileMenuItems = [
   {
     label: "Sign Out",
@@ -51,8 +55,12 @@ export default function ProfileMenu() {
               key={label}
               onClick={() => {
                 closeMenu();
-                dispatch(setSignOutUser());
                 dispatch(removeUser());
+                dispatch(setSignOutUser());
+                if (userInfo.type === "google") {
+                  logout();
+                  localStorage.clear();
+                }
                 toast.success("Logout Successful");
               }}
               className={`flex items-center gap-2 rounded ${
